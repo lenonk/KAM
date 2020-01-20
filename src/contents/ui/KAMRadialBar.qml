@@ -1,10 +1,11 @@
 import CustomControls 1.0
 import org.kde.kirigami 2.4 as Kirigami
+import org.kde.plasma.core 2.0 as PlasmaCore
 
 RadialBar {
     id: control
 
-    width: parent.width / 2.3
+    width: parent.width / 2.5
     height: width
     penStyle: Qt.FlatCap
     progressColor: Kirigami.Theme.highlightColor
@@ -16,9 +17,8 @@ RadialBar {
     suffixText: "%"
     startAngle: 350
     textFont {
-        family: "Ariel"
-        italic: false
-        pointSize: 18
+        family: "MrEavesXLModOT-Book"
+        pointSize: 30
     }
-    textColor: foregroundColor
+    textColor: progressColor
 }

@@ -17,6 +17,9 @@ Q_DECL_EXPORT int main(int argc, char *argv[])
 
     qmlRegisterType<RadialBar>("CustomControls", 1, 0, "RadialBar");
     
+    QFont f("MrEavesXLModOT-Book", 12);
+    app.setFont(f);
+    
     QQmlApplicationEngine engine;
     
     engine.rootContext()->setContextObject(new KLocalizedContext(&engine));
