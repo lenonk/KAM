@@ -1,0 +1,10 @@
+[Desktop Entry]
+Name=KAM
+Comment=KAM Kirigami Application
+Version=1.0
+Exec=kam
+MimeType=application/x-kam;
+Icon=applications-development
+Type=Application
+Terminal=false
+Categories=Qt;KDE;

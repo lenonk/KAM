@@ -1,0 +1,12 @@
+<RCC>
+    <qresource prefix="/">
+        <file alias="main.qml">contents/ui/main.qml</file>
+        <file alias="KAMTabBar.qml">contents/ui/KAMTabBar.qml</file>
+        <file alias="KAMTabButton.qml">contents/ui/KAMTabButton.qml</file>
+        <file alias="KAMRadialBar.qml">contents/ui/KAMRadialBar.qml</file>
+    </qresource>
+    
+    <qresource prefix="/icons">
+        <file alias="kam.png">contents/ui/resources/kam.png</file>
+    </qresource>
+</RCC>
