@@ -4,6 +4,13 @@
         <file alias="KAMTabBar.qml">contents/ui/KAMTabBar.qml</file>
         <file alias="KAMTabButton.qml">contents/ui/KAMTabButton.qml</file>
         <file alias="KAMRadialBar.qml">contents/ui/KAMRadialBar.qml</file>
+        <file alias="KAMProgressBar.qml">contents/ui/KAMProgressBar.qml</file>
+        <file alias="CpuRect.qml">contents/ui/CpuRect.qml</file>
+        <file alias="GpuRect.qml">contents/ui/GpuRect.qml</file>
+        <file alias="KAMProcTable.qml">contents/ui/KAMProcTable.qml</file>
+        <file alias="KAMDriveBar.qml">contents/ui/KAMDriveBar.qml</file>
+        <file alias="StorRect.qml">contents/ui/StorRect.qml</file>
+        <file alias="MonitorTab.qml">contents/ui/MonitorTab.qml</file>
     </qresource>
     
     <qresource prefix="/icons">
