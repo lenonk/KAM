@@ -7,9 +7,11 @@ import QtQuick.Controls 1.4
 
 Rectangle {
     id: cpuRect
-    anchors {
-    }
     
+    Backend {
+        id: backend
+    }
+
     height: 200
     implicitWidth: (parent.width / 2) - anchors.rightMargin
     color: Kirigami.Theme.backgroundColor
@@ -27,6 +29,7 @@ Rectangle {
     }
     KAMRadialBar {
         id: cpuRadialBar
+        value: backend.cpuUsage
         anchors {
             verticalCenter: parent.verticalCenter
             left: parent.left

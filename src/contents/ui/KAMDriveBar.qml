@@ -24,7 +24,7 @@ Text {
             rightMargin: 10
         }
         
-        height: 24
+        height: 20
         width: parent.width - anchors.rightMargin * 2
         color: Kirigami.Theme.alternateBackgroundColor
         
@@ -41,7 +41,7 @@ Text {
         }
         Text {
             font.bold: true
-            font.pointSize: 12
+            font.pointSize: 11
             color: Kirigami.Theme.textColor
             anchors.centerIn: parent
             text: control.used + " / " + control.capacity + "GB"

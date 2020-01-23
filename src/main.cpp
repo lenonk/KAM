@@ -6,6 +6,7 @@
 #include <KLocalizedContext>
 
 #include "radialbar.h"
+#include "backend.h"
 
 Q_DECL_EXPORT int main(int argc, char *argv[])
 {
@@ -16,6 +17,7 @@ Q_DECL_EXPORT int main(int argc, char *argv[])
     QCoreApplication::setApplicationName("KAM");
 
     qmlRegisterType<RadialBar>("CustomControls", 1, 0, "RadialBar");
+    qmlRegisterType<Backend>("CustomControls", 1, 0, "Backend");
     
     QFont f("MrEavesXLModOT-Book", 12);
     app.setFont(f);

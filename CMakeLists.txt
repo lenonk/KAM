@@ -18,7 +18,7 @@ include(ECMGenerateHeaders)
 include(ECMPoQmTools)
 
 include_directories(
-    ${CMAKE_SOURCE_DIR}/src/
+    ${CMAKE_SOURCE_DIR}/include
 )
 
 ################# Find dependencies #################
@@ -26,8 +26,8 @@ find_package(Qt5 REQUIRED COMPONENTS Core Gui Qml QuickControls2 Svg)
 find_package(KF5Kirigami2)
 find_package(KF5I18n)
 
-################# Enable C++11 features for clang and gcc #################
-set(CMAKE_CXX_STANDARD 11)
+################# Enable C++17 features for clang and gcc #################
+set(CMAKE_CXX_STANDARD 17)
 
 ################# build and install #################
 add_subdirectory(src)
