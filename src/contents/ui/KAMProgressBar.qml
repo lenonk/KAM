@@ -15,7 +15,6 @@ T.ProgressBar {
         value: parent.value
         width: parent.width
         height: parent.height
-
         Text {
             anchors.top: parent.bottom
             anchors.left: parent.left

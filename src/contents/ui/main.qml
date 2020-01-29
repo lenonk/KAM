@@ -3,7 +3,9 @@ import CustomControls 1.0
 import QtQuick.Layouts 1.4
 import org.kde.kirigami 2.4 as Kirigami
 import QtQuick.Controls 2.13 as Controls
+import Qt.labs.platform 1.1 as Labs
 import QtQuick.Controls 1.4
+import QtQuick.Window 2.2 as QWin
 
 Kirigami.ApplicationWindow {
     id: root
@@ -17,7 +19,62 @@ Kirigami.ApplicationWindow {
     maximumWidth: width
     minimumHeight: height
     minimumWidth: width
-    
+
+    property int isMinimized: 3
+
+    onVisibilityChanged: {
+        if (visibility === isMinimized)
+            hide()
+    }
+
+    // TODO:  Blow this away and do it in C++ lang.  This is
+    // buggy as shit and just doesn't work.
+    /* Labs.SystemTrayIcon {
+        id: sysTrayIcon
+        icon.source: "qrc:/icons/kam.png"
+        visible: true
+
+        onActivated: {
+            console.log(reason)
+            if (reason === Labs.SystemTrayIcon.Trigger) {
+                if (root.visible == false) {
+                    showApp();
+                }
+                else
+                    applicationWindow().hide()
+            }
+            else if (reason === Labs.SystemTrayIcon.MiddleClick) {
+                showMessage("Message title", "Middle button was clicked.")
+            }
+            else if (reason === Labs.SystemTrayIcon.Context) {
+                console.log("Tray menu should open")
+                trayMenu.open()
+                trayMenu.visible = true
+            }
+        }
+
+        menu: Labs.Menu {
+            id: trayMenu
+
+            MenuItem {
+                id: quitItem
+                text: qsTr("Quit")
+                onTriggered: Qt.quit();
+            }
+            MenuItem {
+                id: showItem
+                text: qsTr("Show")
+                onTriggered: showApp()
+            }
+        }
+    }*/
+
+    function showApp() {
+        applicationWindow().show()
+        applicationWindow().raise()
+        applicationWindow().requestActivate()
+    }
+
     globalDrawer: Kirigami.GlobalDrawer {
         title: i18n("KAM")
         titleIcon: "applications-graphics"

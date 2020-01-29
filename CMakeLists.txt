@@ -17,14 +17,20 @@ include(ECMSetupVersion)
 include(ECMGenerateHeaders)
 include(ECMPoQmTools)
 
-include_directories(
-    ${CMAKE_SOURCE_DIR}/include
-)
-
 ################# Find dependencies #################
 find_package(Qt5 REQUIRED COMPONENTS Core Gui Qml QuickControls2 Svg)
 find_package(KF5Kirigami2)
 find_package(KF5I18n)
+find_package(Boost COMPONENTS system exception REQUIRED)
+
+set(Boost_USE_MULTITHREADED ON) 
+set(Boost_USE_STATIC_RUNTIME OFF)
+set(Boost_USE_STATIC_LIBS OFF) 
+
+include_directories(
+    ${CMAKE_SOURCE_DIR}/include
+    ${Boost_INCLUDE_DIRS}
+)
 
 ################# Enable C++17 features for clang and gcc #################
 set(CMAKE_CXX_STANDARD 17)

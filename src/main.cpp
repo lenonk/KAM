@@ -10,7 +10,7 @@
 
 Q_DECL_EXPORT int main(int argc, char *argv[])
 {
-    QGuiApplication::setAttribute(Qt::AA_EnableHighDpiScaling);
+    QApplication::setAttribute(Qt::AA_EnableHighDpiScaling);
     QApplication app(argc, argv);
     QCoreApplication::setOrganizationName("KDE");
     QCoreApplication::setOrganizationDomain("kde.org");
@@ -19,7 +19,8 @@ Q_DECL_EXPORT int main(int argc, char *argv[])
     qmlRegisterType<RadialBar>("CustomControls", 1, 0, "RadialBar");
     qmlRegisterType<Backend>("CustomControls", 1, 0, "Backend");
     
-    QFont f("MrEavesXLModOT-Book", 12);
+    QFont f("MrEavesXLModOT-Book");
+    f.setPixelSize(12);
     app.setFont(f);
     
     QQmlApplicationEngine engine;

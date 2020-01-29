@@ -12,7 +12,7 @@ Text {
     property int used: 250
     
     font.weight: Font.Light
-    font.pointSize: 18
+    font.pointSize: 16
     color: Kirigami.Theme.textColor
     
     text: driveName

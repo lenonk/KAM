@@ -23,7 +23,9 @@ target_link_libraries(kam
     Qt5::QuickControls2 
     Qt5::Svg 
     KF5::I18n
+    ${Boost_LIBRARIES}
     pthread
+    sensors
 )
 
 install(TARGETS kam ${KF5_INSTALL_TARGETS_DEFAULT_ARGS})
