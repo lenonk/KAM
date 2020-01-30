@@ -22,6 +22,10 @@ Kirigami.ApplicationWindow {
 
     property int isMinimized: 3
 
+    Backend {
+        id: backend
+    }
+
     onVisibilityChanged: {
         if (visibility === isMinimized)
             hide()

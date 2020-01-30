@@ -51,6 +51,7 @@ Item {
             id: ramRadialBar
             anchors.centerIn: parent
             dialWidth: 5
+            value: backend.ramUsage
             textFont {
                 family: "MrEavesXLModOT-Book"
                 pointSize: 18

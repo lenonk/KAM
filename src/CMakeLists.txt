@@ -2,6 +2,9 @@ set (kam_SRCS
     main.cpp
     radialbar.cpp
     backend.cpp
+    backend_cpu.cpp
+    backend_nvidia.cpp
+    backend_other.cpp
 )
 
 set (moc_SRCS
@@ -24,8 +27,12 @@ target_link_libraries(kam
     Qt5::Svg 
     KF5::I18n
     ${Boost_LIBRARIES}
+    ${X11_LIBRARIES}
+    procps
     pthread
     sensors
+    XNVCtrl
+    Xext
 )
 
 install(TARGETS kam ${KF5_INSTALL_TARGETS_DEFAULT_ARGS})

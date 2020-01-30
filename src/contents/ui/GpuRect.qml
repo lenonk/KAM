@@ -33,7 +33,7 @@ Rectangle {
             margins: 10
         }
 
-        value: 2
+        value: backend.gpuUsage
     }
     Text {
         id: loadText
@@ -43,7 +43,7 @@ Rectangle {
     }
     KAMProgressBar {
         id: gpuTempProgress
-        value: 0.2
+        value: backend.gpuTemp / 100.0
         anchors {
             top: parent.top
             left: gpuRadialBar.right
@@ -54,11 +54,11 @@ Rectangle {
         }
         
         leftText: qsTr("Temperature")
-        rightText: qsTr("45C")
+        rightText: qsTr(Number(backend.gpuTemp).toString() + "\u2103")
     }
     KAMProgressBar {
         id: gpuClockProgress
-        value: 0.9
+        value: backend.gpuFreq
         anchors {
             top: gpuTempProgress.bottom
             left: gpuRadialBar.right
@@ -69,11 +69,11 @@ Rectangle {
         }
         
         leftText: qsTr("Clock")
-        rightText: qsTr("2100 MHz")
+        rightText: qsTr(backend.gpuFreqText + "MHz")
     }
     KAMProgressBar {
         id: gpuFanProgress
-        value: 0.6
+        value: backend.gpuFan
         anchors {
             top: gpuClockProgress.bottom
             left: gpuRadialBar.right
@@ -84,6 +84,6 @@ Rectangle {
         }
         
         leftText: qsTr("Fan")
-        rightText: qsTr("1458 RPM")
+        rightText: qsTr(backend.gpuFanText + "RPM")
     }
 }

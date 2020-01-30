@@ -9,10 +9,6 @@ import QtQuick.Controls 1.4
 Rectangle {
     id: cpuRect
     
-    Backend {
-        id: backend
-    }
-
     height: 200
     implicitWidth: (parent.width / 2) - anchors.rightMargin
     color: Kirigami.Theme.backgroundColor

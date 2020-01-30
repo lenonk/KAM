@@ -22,6 +22,9 @@ find_package(Qt5 REQUIRED COMPONENTS Core Gui Qml QuickControls2 Svg)
 find_package(KF5Kirigami2)
 find_package(KF5I18n)
 find_package(Boost COMPONENTS system exception REQUIRED)
+find_package(X11 REQUIRED)
+
+find_package(NVML)
 
 set(Boost_USE_MULTITHREADED ON) 
 set(Boost_USE_STATIC_RUNTIME OFF)
@@ -30,6 +33,7 @@ set(Boost_USE_STATIC_LIBS OFF)
 include_directories(
     ${CMAKE_SOURCE_DIR}/include
     ${Boost_INCLUDE_DIRS}
+    ${X11_INCLUDE_DIR}
 )
 
 ################# Enable C++17 features for clang and gcc #################
