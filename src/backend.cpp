@@ -2,9 +2,34 @@
 
 #include "backend.h"
 
-#define BOOST_NO_EXCEPTIONS
-void boost::throw_exception(std::exception const & e){
-//do nothing
+extern bool cpu_initialize();
+extern bool gpu_initialize();
+extern void cpu_cleanup();
+extern void gpu_cleanup();
+
+const int32_t TimerTick = 1000;
+
+Backend::Backend(QObject *parent) : QObject(parent) {
+    m_mon_timer = new QTimer(this);
+    connect(m_mon_timer, &QTimer::timeout, this, QOverload<>::of(&Backend::sample));
+    m_mon_timer->start(TimerTick);
+}
+
+bool
+Backend::initialize() {
+    if (!cpu_initialize())
+        return false;
+    
+    if (!gpu_initialize())
+        return false;
+    
+    return true;
+}
+
+Backend::~Backend() {
+    sensors_cleanup();
+    cpu_cleanup();
+    gpu_cleanup();
 }
 
 void
@@ -26,4 +51,7 @@ Backend::sample() {
     
     // RAM Samples
     sample_ram_usage();
+    
+    // Mount point samples
+    sample_mount_usage();
 }

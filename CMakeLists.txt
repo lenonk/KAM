@@ -21,7 +21,7 @@ include(ECMPoQmTools)
 find_package(Qt5 REQUIRED COMPONENTS Core Gui Qml QuickControls2 Svg)
 find_package(KF5Kirigami2)
 find_package(KF5I18n)
-find_package(Boost COMPONENTS system exception REQUIRED)
+find_package(Boost COMPONENTS system filesystem exception REQUIRED)
 find_package(X11 REQUIRED)
 
 find_package(NVML)
@@ -36,6 +36,10 @@ include_directories(
     ${X11_INCLUDE_DIR}
 )
 
+if (CMAKE_CXX_FLAGS MATCHES "-fno-exceptions")
+    string (REGEX REPLACE "-fno-exceptions" "" CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS}")
+endif()
+message(STATUS ${CMAKE_CXX_FLAGS})
 ################# Enable C++17 features for clang and gcc #################
 set(CMAKE_CXX_STANDARD 17)
 

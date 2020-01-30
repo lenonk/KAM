@@ -38,9 +38,9 @@ Rectangle {
             topMargin: 35
             leftMargin: 10
         }
-        driveName: "/"
-        capacity: 75
-        used: 30
+        driveName: backend.mountOne
+        capacity: backend.mountOneCapacity
+        used: backend.mountOneUsed
     }
     KAMDriveBar {
         anchors {
@@ -49,8 +49,8 @@ Rectangle {
             topMargin: 90
             leftMargin: 10
         }
-        driveName: "/home"
-        capacity: 500
-        used: 375
+        driveName: backend.mountTwo
+        capacity: backend.mountTwoCapacity
+        used: backend.mountTwoUsed
     }
 }
