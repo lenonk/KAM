@@ -31,26 +31,25 @@ Rectangle {
         }
         text: qsTr("Storage")
     }
-    KAMDriveBar {
-        anchors {
+    ListView {
+        clip:true
+         anchors {
             top: parent.top
             left: parent.left
             topMargin: 35
             leftMargin: 10
         }
-        driveName: backend.mountOne
-        capacity: backend.mountOneCapacity
-        used: backend.mountOneUsed
-    }
-    KAMDriveBar {
-        anchors {
-            top: parent.top
-            left: parent.left
-            topMargin: 90
-            leftMargin: 10
+
+        model: StorageModel {
+            list: storageList
         }
-        driveName: backend.mountTwo
-        capacity: backend.mountTwoCapacity
-        used: backend.mountTwoUsed
+
+        delegate: ColumnLayout {
+            KAMDriveBar {
+                driveName: model.name
+                capacity: model.capacity
+                used: model.used
+            }
+        }
     }
 }

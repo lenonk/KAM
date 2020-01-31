@@ -7,9 +7,12 @@
 #include <QElapsedTimer>
 #include <QDebug>
 #include <QList>
+#include <QVector>
 
 #include <mutex>
 #include <sensors/sensors.h>
+
+class StorageModel;
 
 class Backend : public QObject {
     Q_OBJECT
@@ -37,16 +40,6 @@ class Backend : public QObject {
     // RAM Properties
     Q_PROPERTY(qreal ramUsage READ get_ram_usage NOTIFY ram_usage_changed)
     
-    // Mount point properties
-    Q_PROPERTY(QString mountOne READ get_mount_one NOTIFY mount_points_changed)
-    Q_PROPERTY(QString mountTwo READ get_mount_two NOTIFY mount_points_changed)
-    
-    Q_PROPERTY(int mountOneCapacity READ get_mount_one_capacity NOTIFY mount_points_changed)
-    Q_PROPERTY(int mountTwoCapacity READ get_mount_two_capacity NOTIFY mount_points_changed)
-    
-    Q_PROPERTY(int mountOneUsed READ get_mount_one_used NOTIFY mount_points_changed)
-    Q_PROPERTY(int mountTwoUsed READ get_mount_two_used NOTIFY mount_points_changed)
-    
     public:
         explicit Backend(QObject *parent = nullptr);
         virtual ~Backend();
@@ -66,9 +59,6 @@ class Backend : public QObject {
         
         // RAM Signals 
         void ram_usage_changed();
-        
-        // Mount point properties
-        void mount_points_changed();
         
     public slots:
         // CPU Slots
@@ -91,17 +81,7 @@ class Backend : public QObject {
         
         // RAM Slots
         qreal get_ram_usage() { return m_ram_usage; }
-        
-        // Mount point slots
-        QString get_mount_one() { return m_mount_one; }
-        QString get_mount_two() { return m_mount_two; }
-        
-        int get_mount_one_used() { return m_mount_one_used; }
-        int get_mount_two_used() { return m_mount_two_used; }
-        
-        int get_mount_one_capacity() { return m_mount_one_capacity; }
-        int get_mount_two_capacity() { return m_mount_two_capacity; }
-        
+
     private:
         // Internal member variables
         QTimer *m_mon_timer;
@@ -131,19 +111,10 @@ class Backend : public QObject {
         // RAM member variables
         qreal m_ram_usage { 0 };
         
-        // Mount private member variables
-        QString m_mount_one { "" };
-        QString m_mount_two { "" };
-        
-        int m_mount_one_capacity { 0 };
-        int m_mount_two_capacity { 0 };
-        
-        int m_mount_one_used { 0 };
-        int m_mount_two_used { 0 };
-        
+        // Private Methods
         void sample();
-        
-        // CPU private methods 
+
+        // CPU private methods
         void sample_cpu_usage();
         void sample_cpu_temp();
         void sample_cpu_freq();
@@ -154,7 +125,6 @@ class Backend : public QObject {
         void sample_gpu_temp();
         void sample_gpu_freq();
         void sample_gpu_fan();
-        
         
         // RAM private methods
         void sample_ram_usage();

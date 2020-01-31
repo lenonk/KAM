@@ -7,6 +7,7 @@
 
 #include "radialbar.h"
 #include "backend.h"
+#include "storagemodel.h"
 
 Q_DECL_EXPORT int main(int argc, char *argv[])
 {
@@ -18,7 +19,10 @@ Q_DECL_EXPORT int main(int argc, char *argv[])
 
     qmlRegisterType<RadialBar>("CustomControls", 1, 0, "RadialBar");
     qmlRegisterType<Backend>("CustomControls", 1, 0, "Backend");
-    
+    qmlRegisterType<StorageModel>("CustomControls", 1, 0, "StorageModel");
+    qmlRegisterUncreatableType<StorageList>("CustomControls", 1, 0, "StorageList",
+                                            QStringLiteral("StorageList cannot be created in QML"));
+
     QFont f("MrEavesXLModOT-Book");
     f.setPixelSize(12);
     app.setFont(f);
@@ -26,6 +30,10 @@ Q_DECL_EXPORT int main(int argc, char *argv[])
     QQmlApplicationEngine engine;
     
     engine.rootContext()->setContextObject(new KLocalizedContext(&engine));
+
+    StorageList storageList;
+    engine.rootContext()->setContextProperty(QStringLiteral("storageList"), &storageList);
+
     engine.load(QUrl(QStringLiteral("qrc:///main.qml")));
 
     app.setWindowIcon(QIcon(QStringLiteral(":/icons/kam.png")));

@@ -131,6 +131,7 @@ Backend::sample_gpu_freq() {
     int32_t temp = get_att(NV_CTRL_TARGET_TYPE_GPU, NV_CTRL_GPU_CURRENT_CLOCK_FREQS);
     
     m_gpu_freq = temp >> 16; // GPU Clock in upper 16 bits
+    //int32_t mem_clk = temp & 0x0000FFFF; // memory block in lower 16 bits
     
     if (m_gpu_freq > highest_freq) 
         highest_freq = m_gpu_freq;

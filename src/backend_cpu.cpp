@@ -197,13 +197,9 @@ Backend::sample_cpu_fan() {
             if (feat->type == SENSORS_FEATURE_FAN && !strcmp(feat->name, "fan1"))
                 break;
         }
-            
-        if (!feat) {
-            std::cerr << "Chip does not support FAN speed monitoring.\n";
-            m_disable_fan = true;
-            return;
-        }
-        
+
+        if (!feat) continue;
+
         const sensors_subfeature *sf = nullptr;
         if ((sf = sensors_get_subfeature(cn, feat, SENSORS_SUBFEATURE_FAN_INPUT)) != nullptr) {
             m_cpu_fan = std::roundf(get_value(cn, sf));
@@ -219,8 +215,11 @@ Backend::sample_cpu_fan() {
         m_cpu_fan /= static_cast<float>(fan_max);
         emit cpu_fan_changed();
         
-        break;
+        return;
     }
+
+    std::cerr << "Chip does not support CPU fan speed monitoring.\n";
+    m_disable_fan = true;
 };
 
 static int_fast32_t

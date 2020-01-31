@@ -5,11 +5,13 @@ set (kam_SRCS
     backend_cpu.cpp
     backend_nvidia.cpp
     backend_other.cpp
+    storagemodel.cpp
 )
 
 set (moc_SRCS
-    ../include/radialbar.h
-    ../include/backend.h
+    ${CMAKE_SOURCE_DIR}/include/radialbar.h
+    ${CMAKE_SOURCE_DIR}/include/backend.h
+    ${CMAKE_SOURCE_DIR}/include/storagemodel.h
 )
 
 qt5_add_resources(kam_RSRCS 

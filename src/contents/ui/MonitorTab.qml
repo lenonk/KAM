@@ -93,10 +93,10 @@ Item {
             right: parent.right
             topMargin: 10
         }
-        model: tableModel
+        model: backend.mountData
     }
     
-    ListModel {
+    /*ListModel {
         id: tableModel
         // All of these should go away when the backend is written
         ListElement {
@@ -123,5 +123,5 @@ Item {
             upload: "46 kb/s"
             download: "4598 kb/s"
         }
-    }
+    }*/
 }
