@@ -53,6 +53,16 @@ StorageModel::data(const QModelIndex &index, int role) const {
     return QVariant();
 }
 
+QHash<int, QByteArray>
+StorageModel::roleNames() const {
+    QHash<int, QByteArray> names;
+    names[NameRole] = "name";
+    names[UsedRole] = "used";
+    names[CapacityRole] = "capacity";
+    
+    return names;
+}
+
 static void
 read_mounts(std::vector<std::string> &mounts) {
     std::ifstream f_stat(ProcMounts);
@@ -83,6 +93,8 @@ StorageModel::sample_mount_usage() {
     std::vector<std::string> m_vec;
     read_mounts(m_vec);
 
+    beginResetModel();
+    
     m_list->items().clear();
     StorageItem stor_item;
     for (auto &mp : m_vec) {
@@ -93,6 +105,6 @@ StorageModel::sample_mount_usage() {
 
         m_list->items().append(stor_item);
     }
-
-    emit storage_changed();
+    
+    endResetModel();
 }

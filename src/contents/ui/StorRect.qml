@@ -7,8 +7,6 @@ import QtQuick.Controls 1.4
 
 Rectangle {
     id: storRect
-    anchors {
-    }
     
     implicitWidth: (parent.width * 0.33) - netRect.anchors.rightMargin / 2
     height:150
@@ -18,6 +16,7 @@ Rectangle {
     radius: 3
     antialiasing: true
     clip: true
+    
     Text {
         id: storTxt
         font.bold: true
@@ -31,25 +30,57 @@ Rectangle {
         }
         text: qsTr("Storage")
     }
-    ListView {
-        clip:true
-         anchors {
+    
+    /*KAMDriveBar {
+        anchors {
             top: parent.top
             left: parent.left
             topMargin: 35
             leftMargin: 10
         }
-
+        driveName: "/"
+        capacity: 75
+        used: 25
+    }*/
+    ListModel {
+        id: storModel;
+        
+        ListElement {
+            name: "/foo"
+            capacity: "100"
+            used: "25"
+        }
+        
+        ListElement {
+            name: "/home"
+            capacity: "350"
+            used: "250"
+        }
+    }
+    
+    Component {
+        id: storDelegate
+        KAMDriveBar {
+            driveName: name
+            driveCapacity: capacity
+            driveUsed: used
+        }
+    }
+    
+    ListView {
+        anchors {
+            top: parent.top
+            left: parent.left
+            topMargin: 35
+            leftMargin: 10
+        }
+        width: parent.width
+        height: parent.height
+        
         model: StorageModel {
-            list: storageList
         }
+        //model: storModel
 
-        delegate: ColumnLayout {
-            KAMDriveBar {
-                driveName: model.name
-                capacity: model.capacity
-                used: model.used
-            }
-        }
+        delegate: storDelegate
     }
 }

@@ -5,46 +5,50 @@ import org.kde.kirigami 2.4 as Kirigami
 import QtQuick.Controls 2.13 as Controls
 import QtQuick.Controls 1.4
 
-Text {
+Item {
     id: control
-    property string driveName: "/"
-    property int capacity: 500
-    property int used: 250
+    property string driveName
+    property int driveCapacity
+    property int driveUsed
     
-    font.weight: Font.Light
-    font.pointSize: 16
-    color: Kirigami.Theme.textColor
-    
-    text: driveName
+    height: 50
     width: parent.width
-    Rectangle {
-        anchors {
-            left: parent.left
-            top: parent.bottom
-            rightMargin: 10
-        }
+    Text {
+        font.weight: Font.Light
+        font.pointSize: 16
+        color: Kirigami.Theme.textColor
         
-        height: 20
-        width: parent.width - anchors.rightMargin * 2
-        color: Kirigami.Theme.alternateBackgroundColor
-        
+        text: driveName
+        width: parent.width
         Rectangle {
             anchors {
                 left: parent.left
-                top: parent.top
+                top: parent.bottom
+                rightMargin: 10
             }
             
-            height: parent.height
-            width: parent.width * used / capacity
-            color: Kirigami.Theme.highlightColor
+            height: 20
+            width: parent.width - anchors.rightMargin * 2
+            color: Kirigami.Theme.alternateBackgroundColor
             
-        }
-        Text {
-            font.bold: true
-            font.pointSize: 11
-            color: Kirigami.Theme.textColor
-            anchors.centerIn: parent
-            text: control.used + " / " + control.capacity + "GB"
+            Rectangle {
+                anchors {
+                    left: parent.left
+                    top: parent.top
+                }
+                
+                height: parent.height
+                width: parent.width * driveUsed / driveCapacity
+                color: Kirigami.Theme.highlightColor
+                
+            }
+            Text {
+                font.bold: true
+                font.pointSize: 11
+                color: Kirigami.Theme.textColor
+                anchors.centerIn: parent
+                text: control.driveUsed + " / " + control.driveCapacity + "GB"
+            }
         }
     }
 }
