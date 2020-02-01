@@ -66,38 +66,7 @@ Kirigami.ApplicationWindow {
         Kirigami.Page {
             title: i18n("LIGHTING")
             
-            actions {
-                /*main: Kirigami.Action {
-                    iconName: "go-home"
-                    onTriggered: showPassiveNotification(i18n("Main action triggered"))
-                }
-                left: Kirigami.Action {
-                    iconName: "go-previous"
-                    onTriggered: showPassiveNotification(i18n("Left action triggered"))
-                }
-                right: Kirigami.Action {
-                    iconName: "go-next"
-                    onTriggered: showPassiveNotification(i18n("Right action triggered"))
-                }*/
-                contextualActions: [
-                    Kirigami.Action {
-                        text: i18n("MY PC")
-                        iconName: "arrow-right"
-                        onTriggered: pageStack.replace(mainPageComponent)
-                    },
-                    Kirigami.Action {
-                        text: i18n("LIGHTING")
-                        iconName: "arrow-left"
-                        onTriggered: pageStack.replace(mainPageComponent)
-                    },
-                    Kirigami.Action {
-                        text: i18n("TUNING")
-                        iconName: "arrow-right"
-                        enabled: false
-                        onTriggered: pageStack.replace(tuningPageComponent)
-                    }
-                ]
-            }
+            KAMPageHeader { }
         }
     }
     Component {
@@ -106,38 +75,7 @@ Kirigami.ApplicationWindow {
         Kirigami.Page {
             title: i18n("MY PC")
                
-            actions {
-                /*main: Kirigami.Action {
-                    iconName: "go-home"
-                    onTriggered: showPassiveNotification(i18n("Main action triggered"))
-                }
-                left: Kirigami.Action {
-                    iconName: "go-previous"
-                    onTriggered: showPassiveNotification(i18n("Left action triggered"))
-                }
-                right: Kirigami.Action {
-                    iconName: "go-next"
-                    onTriggered: showPassiveNotification(i18n("Right action triggered"))
-                }*/
-                contextualActions: [
-                    Kirigami.Action {
-                        text: i18n("MY PC")
-                        iconName: "arrow-right"
-                        onTriggered: pageStack.replace(mainPageComponent)
-                    },
-                    Kirigami.Action {
-                        text: i18n("LIGHTING")
-                        iconName: "arrow-right"
-                        onTriggered: pageStack.replace(lightingPageComponent);
-                    },
-                    Kirigami.Action {
-                        text: i18n("TUNING")
-                        iconName: "arrow-right"
-                        enabled: false
-                        onTriggered: showPassiveNotification(i18n("Contextual action 3 clicked"))
-                    }
-                ]
-            }
+            KAMPageHeader {}
      
             KAMTabBar {
                 id: tabBar
