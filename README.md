@@ -31,10 +31,12 @@ These dependencies are temporary, and will be optional eventually.
 * Nvml
 
 ## From the source root:
-mkdir build
-cd build
-cmake ..
-make && make install
+* mkdir build
+* cd build
+* cmake ..
+* make && make install
+
+After install make sure to run sensors-detect, if you haven't already, before starting KAM.
 
 ## Nvidia GPU is curently required
 
