@@ -11,7 +11,13 @@ a Kraken and/or a smart device, the system monitoring stuff is available elsewhe
 
 If you're not using KDE, have a look at GKraken.  He claims that lighting control is coming soon.
 
-Note:  Lighting and fan control functionality is not available yet.  I wrote the above with the current things I'm working on in mind.
+###Note:  
+
+Lighting and fan control functionality is not available yet.  I wrote the above with the current things I'm working on in mind.
+
+The backend code is an absolute mess.  That's because I didn't do any design on this project. I just started hacking away at it, I had no idea how I was going to gather any of the system data I needed, and I've never used QML before.  So, yeah, the code is pretty much horrifying.  My MO is to get everything working, then go back and clean it up and optimize, and this project isn't even halfway through the "get it working" stage yet.
+
+I welcome any help, pull requests, collaborators, issues, or comments.
 
 # Compilation instructions
 
