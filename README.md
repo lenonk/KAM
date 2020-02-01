@@ -11,6 +11,8 @@ a Kraken and/or a smart device, the system monitoring stuff is available elsewhe
 
 If you're not using KDE, have a look at GKraken.  He claims that lighting control is coming soon.
 
+Note:  Lighting and fan control functionality is not available yet.  I wrote the above with the current things I'm working on in mind.
+
 # Compilation instructions
 
 *Dependencies*
