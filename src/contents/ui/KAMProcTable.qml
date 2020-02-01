@@ -9,10 +9,75 @@ TableView {
     implicitHeight: 150 - anchors.topMargin
     selectionMode: SelectionMode.NoSelection
 
-    TableViewColumn { title: "Top Processes"; role: "process"; width: 200 }
-    TableViewColumn { title: "CPU"; role: "cpu"; width: 75 }
-    TableViewColumn { title: "GPU"; role: "gpu"; width: 75 }
-    TableViewColumn { title: "RAM"; role: "ram"; width: 75 }
-    TableViewColumn { title: "Upload"; role: "upload"; width: 90 }
-    TableViewColumn { title: "Download"; role: "download"; width: 90 }
+    TableViewColumn { 
+        title: "Top Processes"; 
+        width: 252 
+        delegate: Text {
+            anchors.fill: parent
+            verticalAlignment: Text.AlignVCenter 
+            anchors.leftMargin: 10
+            color: Kirigami.Theme.textColor
+            text: (model != null) ? model.process : ""
+        }
+    }
+    TableViewColumn { 
+        title: "CPU"
+        delegate: Text {
+            anchors.fill: parent
+            horizontalAlignment: Text.AlignRight
+            verticalAlignment: Text.AlignVCenter 
+            anchors.rightMargin: 10
+            color: Kirigami.Theme.textColor
+            text: (model != null) ? model.cpu : ""
+        }
+        width: 60 
+    }
+    TableViewColumn {
+        title: "GPU"
+        delegate: Text {
+            anchors.fill: parent
+            horizontalAlignment: Text.AlignRight
+            verticalAlignment: Text.AlignVCenter 
+            anchors.rightMargin: 10
+            color: Kirigami.Theme.textColor
+            text: (model != null) ? model.gpu : ""
+        }
+        width: 60
+    }
+    TableViewColumn { 
+        title: "RAM"
+        delegate: Text {
+            anchors.fill: parent
+            horizontalAlignment: Text.AlignRight
+            verticalAlignment: Text.AlignVCenter 
+            anchors.rightMargin: 10
+            color: Kirigami.Theme.textColor
+            text: (model != null) ? model.ram : ""
+        }
+        width: 60
+    }
+    TableViewColumn { 
+        title: "Download"
+        delegate: Text {
+            anchors.fill: parent
+            horizontalAlignment: Text.AlignRight
+            verticalAlignment: Text.AlignVCenter 
+            anchors.rightMargin: 10
+            color: Kirigami.Theme.textColor
+            text: (model != null) ? model.download : ""
+        }
+        width: 90
+    }
+    TableViewColumn { 
+        title: "Upload"
+        delegate: Text {
+            anchors.fill: parent
+            horizontalAlignment: Text.AlignRight
+            verticalAlignment: Text.AlignVCenter 
+            anchors.rightMargin: 10
+            color: Kirigami.Theme.textColor
+            text: (model != null) ? model.upload : ""
+        }
+        width: 90
+    }
 }

@@ -6,12 +6,14 @@ set (kam_SRCS
     backend_nvidia.cpp
     backend_other.cpp
     storagemodel.cpp
+    processmodel.cpp
 )
 
 set (moc_SRCS
     ${CMAKE_SOURCE_DIR}/include/radialbar.h
     ${CMAKE_SOURCE_DIR}/include/backend.h
     ${CMAKE_SOURCE_DIR}/include/storagemodel.h
+    ${CMAKE_SOURCE_DIR}/include/processmodel.h
 )
 
 qt5_add_resources(kam_RSRCS 
@@ -34,6 +36,7 @@ target_link_libraries(kam
     pthread
     sensors
     XNVCtrl
+    nvidia-ml
     Xext
 )
 

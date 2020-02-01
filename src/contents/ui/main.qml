@@ -2,16 +2,10 @@ import QtQuick 2.12
 import CustomControls 1.0
 import QtQuick.Layouts 1.4
 import org.kde.kirigami 2.4 as Kirigami
-import QtQuick.Controls 2.13 as Controls
-import Qt.labs.platform 1.1 as Labs
-import QtQuick.Controls 1.4
-import QtQuick.Window 2.2 as QWin
 
 Kirigami.ApplicationWindow {
     id: root
-    title: "NZXT Fan and Lighting control"
-    //height: 575
-    //width: 600
+    title: "Fan and Lighting control"
     height: 625
     width: 650
 
@@ -31,48 +25,6 @@ Kirigami.ApplicationWindow {
             hide()
     }
 
-    // TODO:  Blow this away and do it in C++ lang.  This is
-    // buggy as shit and just doesn't work.
-    /* Labs.SystemTrayIcon {
-        id: sysTrayIcon
-        icon.source: "qrc:/icons/kam.png"
-        visible: true
-
-        onActivated: {
-            console.log(reason)
-            if (reason === Labs.SystemTrayIcon.Trigger) {
-                if (root.visible == false) {
-                    showApp();
-                }
-                else
-                    applicationWindow().hide()
-            }
-            else if (reason === Labs.SystemTrayIcon.MiddleClick) {
-                showMessage("Message title", "Middle button was clicked.")
-            }
-            else if (reason === Labs.SystemTrayIcon.Context) {
-                console.log("Tray menu should open")
-                trayMenu.open()
-                trayMenu.visible = true
-            }
-        }
-
-        menu: Labs.Menu {
-            id: trayMenu
-
-            MenuItem {
-                id: quitItem
-                text: qsTr("Quit")
-                onTriggered: Qt.quit();
-            }
-            MenuItem {
-                id: showItem
-                text: qsTr("Show")
-                onTriggered: showApp()
-            }
-        }
-    }*/
-
     function showApp() {
         applicationWindow().show()
         applicationWindow().raise()
@@ -80,7 +32,7 @@ Kirigami.ApplicationWindow {
     }
 
     globalDrawer: Kirigami.GlobalDrawer {
-        title: i18n("KAM")
+        title: "KDE KAM"
         titleIcon: "applications-graphics"
         actions: [
             Kirigami.Action {
@@ -107,13 +59,13 @@ Kirigami.ApplicationWindow {
     }
 
     pageStack.initialPage: mainPageComponent
-
+    
     Component {
-        id: mainPageComponent
+        id: lightingPageComponent
         
         Kirigami.Page {
-            title: i18n("KDE KAM")
-
+            title: i18n("LIGHTING")
+            
             actions {
                 /*main: Kirigami.Action {
                     iconName: "go-home"
@@ -131,13 +83,52 @@ Kirigami.ApplicationWindow {
                     Kirigami.Action {
                         text: i18n("MY PC")
                         iconName: "arrow-right"
-                        onTriggered: showPassiveNotification(i18n("Contextual action 1 clicked"))
-                        //enabled: false
+                        onTriggered: pageStack.replace(mainPageComponent)
+                    },
+                    Kirigami.Action {
+                        text: i18n("LIGHTING")
+                        iconName: "arrow-left"
+                        onTriggered: pageStack.replace(mainPageComponent)
+                    },
+                    Kirigami.Action {
+                        text: i18n("TUNING")
+                        iconName: "arrow-right"
+                        enabled: false
+                        onTriggered: pageStack.replace(tuningPageComponent)
+                    }
+                ]
+            }
+        }
+    }
+    Component {
+        id: mainPageComponent
+        
+        Kirigami.Page {
+            title: i18n("MY PC")
+               
+            actions {
+                /*main: Kirigami.Action {
+                    iconName: "go-home"
+                    onTriggered: showPassiveNotification(i18n("Main action triggered"))
+                }
+                left: Kirigami.Action {
+                    iconName: "go-previous"
+                    onTriggered: showPassiveNotification(i18n("Left action triggered"))
+                }
+                right: Kirigami.Action {
+                    iconName: "go-next"
+                    onTriggered: showPassiveNotification(i18n("Right action triggered"))
+                }*/
+                contextualActions: [
+                    Kirigami.Action {
+                        text: i18n("MY PC")
+                        iconName: "arrow-right"
+                        onTriggered: pageStack.replace(mainPageComponent)
                     },
                     Kirigami.Action {
                         text: i18n("LIGHTING")
                         iconName: "arrow-right"
-                        onTriggered: showPassiveNotification(i18n("Contextual action 2 clicked"))
+                        onTriggered: pageStack.replace(lightingPageComponent);
                     },
                     Kirigami.Action {
                         text: i18n("TUNING")

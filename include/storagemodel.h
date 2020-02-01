@@ -1,5 +1,5 @@
-#ifndef STORAGEMODEL_H
-#define STORAGEMODEL_H
+#ifndef __STORAGEMODEL_H__
+#define __STORAGEMODEL_H__
 
 #include <QAbstractListModel>
 #include <QObject>
@@ -43,9 +43,6 @@ public:
     QVariant data(const QModelIndex &index, int role = Qt::DisplayRole) const override;
     QHash<int, QByteArray> roleNames() const override;
 
-    signals:
-        void storage_changed();
-
     public slots:
         StorageList *get_list() { return m_list; }
         
@@ -56,4 +53,4 @@ private:
     void sample_mount_usage();
 };
 
-#endif // STORAGEMODEL_H
+#endif // __STORAGEMODEL_H__

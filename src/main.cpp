@@ -8,6 +8,7 @@
 #include "radialbar.h"
 #include "backend.h"
 #include "storagemodel.h"
+#include "processmodel.h"
 
 Q_DECL_EXPORT int main(int argc, char *argv[])
 {
@@ -20,6 +21,7 @@ Q_DECL_EXPORT int main(int argc, char *argv[])
     qmlRegisterType<RadialBar>("CustomControls", 1, 0, "RadialBar");
     qmlRegisterType<Backend>("CustomControls", 1, 0, "Backend");
     qmlRegisterType<StorageModel>("CustomControls", 1, 0, "StorageModel");
+    qmlRegisterType<ProcessModel>("CustomControls", 1, 0, "ProcessModel");
 
     QFont f("MrEavesXLModOT-Book");
     f.setPixelSize(12);
