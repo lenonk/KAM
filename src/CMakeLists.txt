@@ -7,6 +7,7 @@ set (kam_SRCS
     backend_other.cpp
     storagemodel.cpp
     processmodel.cpp
+    lighting.cpp
 )
 
 set (moc_SRCS
@@ -35,6 +36,7 @@ target_link_libraries(kam
     procps
     pthread
     sensors
+    usb-1.0
     XNVCtrl
     nvidia-ml
     Xext

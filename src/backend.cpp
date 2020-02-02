@@ -14,6 +14,8 @@ Backend::Backend(QObject *parent) : QObject(parent) {
     m_mon_timer = new QTimer(this);
     connect(m_mon_timer, &QTimer::timeout, this, QOverload<>::of(&Backend::sample));
     m_mon_timer->start(TimerTick);
+    
+    detect_usb_devices();
 }
 
 bool

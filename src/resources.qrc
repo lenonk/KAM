@@ -11,7 +11,8 @@
         <file alias="KAMDriveBar.qml">contents/ui/KAMDriveBar.qml</file>
         <file alias="StorRect.qml">contents/ui/StorRect.qml</file>
         <file alias="MonitorTab.qml">contents/ui/MonitorTab.qml</file>
-        <file>contents/ui/KamPageHeader.qml</file>
+        <file alias="MainPageComponent.qml">contents/ui/MainPageComponent.qml</file>
+        <file alias="LightingPageComponent.qml">contents/ui/LightingPageComponent.qml</file>
     </qresource>
     <qresource prefix="/icons">
         <file alias="kam.png">contents/ui/resources/kam.png</file>

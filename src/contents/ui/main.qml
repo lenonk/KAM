@@ -2,10 +2,11 @@ import QtQuick 2.12
 import CustomControls 1.0
 import QtQuick.Layouts 1.4
 import org.kde.kirigami 2.4 as Kirigami
+import Qt.labs.platform 1.1 as Labs
 
 Kirigami.ApplicationWindow {
     id: root
-    title: "Fan and Lighting control"
+    title: "KAM Fan and Lighting control"
     height: 625
     width: 650
 
@@ -25,6 +26,44 @@ Kirigami.ApplicationWindow {
             hide()
     }
 
+     Labs.SystemTrayIcon {
+        id: sysTrayIcon
+        icon.source: "qrc:/icons/kam.png"
+        visible: true
+        onActivated: {
+            if (reason === Labs.SystemTrayIcon.Trigger) {
+                if (root.visible == false) {
+                    showApp();
+                }
+                else
+                    applicationWindow().hide()
+            }
+            else if (reason === Labs.SystemTrayIcon.MiddleClick) {
+                //showMessage("Message title", "Middle button was clicked.")
+            }
+        }
+        menu: Labs.Menu {
+            id: trayMenu
+            Labs.MenuItem {
+                id: showItem
+                text: qsTr("Show")
+                onTriggered: showApp()
+            }
+            Labs.MenuItem {
+                id: hideItem
+                text: qsTr("Hide")
+                onTriggered: applicationWindow().hide();
+            }
+            Labs.MenuSeparator {}
+            Labs.MenuItem {
+                id: quitItem
+                text: qsTr("Quit")
+                onTriggered: Qt.quit();
+            }
+            
+        }
+    }
+
     function showApp() {
         applicationWindow().show()
         applicationWindow().raise()
@@ -33,7 +72,6 @@ Kirigami.ApplicationWindow {
 
     globalDrawer: Kirigami.GlobalDrawer {
         title: "KDE KAM"
-        titleIcon: "applications-graphics"
         actions: [
             Kirigami.Action {
                 text: i18n("View")
@@ -60,66 +98,6 @@ Kirigami.ApplicationWindow {
 
     pageStack.initialPage: mainPageComponent
     
-    Component {
-        id: lightingPageComponent
-        
-        Kirigami.Page {
-            title: i18n("LIGHTING")
-            
-            KAMPageHeader { }
-        }
-    }
-    Component {
-        id: mainPageComponent
-        
-        Kirigami.Page {
-            title: i18n("MY PC")
-               
-            KAMPageHeader {}
-     
-            KAMTabBar {
-                id: tabBar
-                width: parent.width
-
-                KAMTabButton {
-                    id: monButton
-                    text: qsTr("Monitoring")
-                    width: undefined
-                }
-                KAMTabButton {
-                    id: specButton
-                    text: qsTr("Specs")
-                    width: undefined
-                }
-                KAMTabButton {
-                    id: gameButton
-                    text: qsTr("Games")
-                    width: undefined
-                }
-            }
-
-            StackLayout {
-                currentIndex: tabBar.currentIndex
-                anchors {
-                    top: tabBar.bottom
-                    left: parent.left
-                    right: parent.right
-                    bottom: parent.bottom
-                }
-
-                MonitorTab {
-                    id: monitorTab
-                }
-
-                Item {
-                    id: specsTab
-                    //SpecPage {}
-                }
-                Item {
-                    id: gamesTab
-                    //GamesPage {}
-                }
-            }
-        }
-    }
+    MainPageComponent { id: mainPageComponent }
+    LightingPageComponent { id: lightingPageComponent }
 }

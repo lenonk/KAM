@@ -132,6 +132,9 @@ class Backend : public QObject {
         // Mount point private methods
         void sample_mount_usage();
         
+        // Lib USB / Lighting
+        void detect_usb_devices();
+        
         bool initialize();
 };
 
