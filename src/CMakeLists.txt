@@ -8,6 +8,7 @@ set (kam_SRCS
     storagemodel.cpp
     processmodel.cpp
     lighting.cpp
+    launcher.cpp
 )
 
 set (moc_SRCS
@@ -15,6 +16,7 @@ set (moc_SRCS
     ${CMAKE_SOURCE_DIR}/include/backend.h
     ${CMAKE_SOURCE_DIR}/include/storagemodel.h
     ${CMAKE_SOURCE_DIR}/include/processmodel.h
+    ${CMAKE_SOURCE_DIR}/include/launcher.h
 )
 
 qt5_add_resources(kam_RSRCS 

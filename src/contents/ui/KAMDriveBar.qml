@@ -47,8 +47,19 @@ Item {
                 font.pointSize: 11
                 color: Kirigami.Theme.textColor
                 anchors.centerIn: parent
-                text: control.driveUsed + " / " + control.driveCapacity + "GB"
+                text: getStorageString(control.driveUsed, control.driveCapacity)
             }
         }
+    }
+    
+    function getStorageString(used, capacity) {
+        if (capacity > 1000) {
+            return (used / 1000) + " / " + (capacity / 1000) + "TB";
+        }
+        else {
+            return used + " / " + capacity + "GB";
+        }
+        
+        return "";
     }
 }

@@ -9,6 +9,7 @@
 #include "backend.h"
 #include "storagemodel.h"
 #include "processmodel.h"
+#include "launcher.h"
 
 Q_DECL_EXPORT int main(int argc, char *argv[])
 {
@@ -22,6 +23,7 @@ Q_DECL_EXPORT int main(int argc, char *argv[])
     qmlRegisterType<Backend>("CustomControls", 1, 0, "Backend");
     qmlRegisterType<StorageModel>("CustomControls", 1, 0, "StorageModel");
     qmlRegisterType<ProcessModel>("CustomControls", 1, 0, "ProcessModel");
+    qmlRegisterType<Launcher>("CustomControls", 1, 0, "Launcher");
 
     QFont f("MrEavesXLModOT-Book");
     f.setPixelSize(12);

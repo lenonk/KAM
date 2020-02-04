@@ -9,7 +9,7 @@ Rectangle {
     id: storRect
     
     implicitWidth: (parent.width * 0.33) - netRect.anchors.rightMargin / 2
-    height:150
+    height: 150
     color: Kirigami.Theme.backgroundColor
     border.color: Kirigami.Theme.alternateBackgroundColor
     border.width: 1
@@ -31,33 +31,6 @@ Rectangle {
         text: qsTr("Storage")
     }
     
-    /*KAMDriveBar {
-        anchors {
-            top: parent.top
-            left: parent.left
-            topMargin: 35
-            leftMargin: 10
-        }
-        driveName: "/"
-        capacity: 75
-        used: 25
-    }*/
-    ListModel {
-        id: storModel;
-        
-        ListElement {
-            name: "/foo"
-            capacity: "100"
-            used: "25"
-        }
-        
-        ListElement {
-            name: "/home"
-            capacity: "350"
-            used: "250"
-        }
-    }
-    
     Component {
         id: storDelegate
         KAMDriveBar {
@@ -76,10 +49,10 @@ Rectangle {
         }
         width: parent.width
         height: parent.height
+        clip: true
         
         model: StorageModel {
         }
-        //model: storModel
 
         delegate: storDelegate
     }

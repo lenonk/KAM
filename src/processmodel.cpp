@@ -138,7 +138,7 @@ cpu_greater_than(const ProcessItem &p1, const ProcessItem &p2) { return p1.cpu >
 void
 ProcessModel::make_process_item(ProcessItem &pi, proc_t *proc) {
     std::stringstream t;
-    t << std::setprecision(1);
+    t << std::fixed << std::setprecision(1);
     
     // Process Name
     pi.process = QString(proc->cmd);

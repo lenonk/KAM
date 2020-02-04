@@ -24,8 +24,6 @@ find_package(KF5I18n)
 find_package(Boost COMPONENTS system filesystem exception REQUIRED)
 find_package(X11 REQUIRED)
 
-find_package(NVML)
-
 set(Boost_USE_MULTITHREADED ON) 
 set(Boost_USE_STATIC_RUNTIME OFF)
 set(Boost_USE_STATIC_LIBS OFF) 
@@ -39,7 +37,7 @@ include_directories(
 if (CMAKE_CXX_FLAGS MATCHES "-fno-exceptions")
     string (REGEX REPLACE "-fno-exceptions" "" CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS}")
 endif()
-message(STATUS ${CMAKE_CXX_FLAGS})
+
 ################# Enable C++17 features for clang and gcc #################
 set(CMAKE_CXX_STANDARD 17)
 

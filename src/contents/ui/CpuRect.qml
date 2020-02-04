@@ -1,11 +1,8 @@
-import QtQuick 2.12
+import QtQuick 2.14
 import CustomControls 1.0
-import QtQuick.Layouts 1.4
 import org.kde.kirigami 2.4 as Kirigami
 import org.kde.plasma.core 2.0 as PlasmaCore
-import QtQuick.Controls 2.13 as Controls
-import QtQuick.Controls 1.4
-import QtGraphicalEffects 1.14 as Effects
+import QtQuick.Controls 2.14 
 
 Rectangle {
     id: cpuRect
@@ -20,6 +17,10 @@ Rectangle {
     radius: 3
     antialiasing: true
 
+    Launcher {
+        id: qprocess
+    }
+    
     Text {
         id: cpuText
         text: qsTr("CPU")
@@ -42,6 +43,39 @@ Rectangle {
         text: qsTr("Minimal Load")
         color: Kirigami.Theme.textColor
         anchors { bottom: parent.bottom; left: parent.left; margins: 10 }
+    }
+    ComboBox {
+        id: control
+        model: ListModel {
+            id: cbItems
+            ListElement { text: "Powersave"; value: "powersave" }
+            ListElement { text: "Ondemand"; value: "ondemand" }
+            ListElement { text: "Performance"; value: "performance" }
+        }
+        anchors { top: parent.top; right: parent.right; margins: 10 }
+        width: 148
+        height: 30
+        
+        delegate: ItemDelegate {
+            width: control.width
+            contentItem: Text {
+                text: model.text
+                color: Kirigami.Theme.textColor
+                font: control.font
+                elide: Text.EideRight
+                verticalAlignment: Text.AlignVCenter
+            }
+            highlighted: control.highlightedIndex === index
+        }
+        
+        contentItem: Text {
+            text: cbItems.get(parent.currentIndex).text
+            color: Kirigami.Theme.textColor
+            verticalAlignment: Text.AlignVCenter
+            elide: Text.ElideRight
+        }
+        
+        onCurrentIndexChanged: qprocess.launch('kdesu -c "cpupower frequency-set -g ' + cbItems.get(currentIndex).value)
     }
     KAMProgressBar {
         id: cpuTempProgress
