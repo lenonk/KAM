@@ -1,0 +1,29 @@
+<RCC>
+    <qresource prefix="/">
+        <file>qml/main.qml</file>
+        <file>qml/pages/homePage.qml</file>
+        <file>qml/controls/LeftMenuButton.qml</file>
+        <file>qml/controls/ToggleButton.qml</file>
+        <file>qml/controls/TopBarButton.qml</file>
+        <file>qml/controls/KAMRadialBar.qml</file>
+        <file>qml/controls/KAMProgressBar.qml</file>
+
+        <file>qml/pages/settingsPage.qml</file>
+
+        <file>qml/images/svg_icons/close_icon.svg</file>
+        <file>qml/images/svg_icons/home_icon.svg</file>
+        <file>qml/images/svg_icons/icon_app_top.svg</file>
+        <file>qml/images/svg_icons/maximize_icon.svg</file>
+        <file>qml/images/svg_icons/menu_icon.svg</file>
+        <file>qml/images/svg_icons/minimize_icon.svg</file>
+        <file>qml/images/svg_icons/open_icon.svg</file>
+        <file>qml/images/svg_icons/resize_icon.svg</file>
+        <file>qml/images/svg_icons/restore_icon.svg</file>
+        <file>qml/images/svg_icons/save_icon.svg</file>
+        <file>qml/images/svg_icons/settings_icon.svg</file>
+        <file>qml/images/svg_icons/lighting_icon.svg</file>
+        <file>qml/images/svg_icons/sysinfo_icon.svg</file>
+        <file>qml/images/svg_icons/cooling_icon.svg</file>
+        <file>qml/images/png_icons/kam.png</file>
+    </qresource>
+</RCC>
