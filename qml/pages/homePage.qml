@@ -1,5 +1,6 @@
 import QtQuick 2.15
-import QtQuick.Controls 2.15
+import CustomControls 1.0
+import QtQuick.Controls 2.2
 import org.kde.plasma.core 2.0 as PlasmaCore
 
 import "../controls"
@@ -7,7 +8,7 @@ import "../controls"
 Item {
     Rectangle {
         id: homePage
-        color: PlasmaCore.Theme.backgroundColor
+        color: PlasmaCore.Theme.headerBackgroundColor
         anchors.fill: parent
 
         Row {
@@ -16,20 +17,17 @@ Item {
             anchors.left: parent.left
             anchors.right: parent.right
             anchors.top: parent.top
-            anchors.rightMargin: 0
-            anchors.leftMargin: 0
-            anchors.topMargin: 0
 
             Rectangle {
                 id: rectCPU
                 height: parent.height
                 width: parent.width / 2
-                color: PlasmaCore.Theme.backgroundColor
+                color: PlasmaCore.Theme.headerBackgroundColor
 
                 Rectangle {
                     anchors.fill: parent
                     anchors.rightMargin: 5
-                    color: PlasmaCore.Theme.backgroundColor
+                    color: PlasmaCore.Theme.headerBackgroundColor
                     border.color: PlasmaCore.Theme.highlightColor
                     border.width: 1
                     radius: 5
@@ -54,18 +52,10 @@ Item {
 
                         width: parent.width / 2.5
                         height: width
-                    }
 
-                    Label {
-                        text: qsTr("Load")
-                        color: PlasmaCore.Theme.disabledTextColor
-                        font.pointSize: 12
-                        anchors {
-                            bottom: cpuRadialBar.bottom
-                            left: cpuRadialBar.right
-                            leftMargin: -50
-                            bottomMargin: -5
-                        }
+                        label: qsTr("Load")
+
+                        value: backend.cpuUsage
                     }
 
                     KAMProgressBar {
@@ -80,7 +70,8 @@ Item {
                         }
 
                         leftText: qsTr("Temperature")
-                        rightText: qsTr("50\u2103")
+                        rightText: qsTr(Number(backend.cpuTemp).toString() + "\u2103")
+                        value: backend.cpuTemp / 100
                     }
 
                     KAMProgressBar {
@@ -95,7 +86,9 @@ Item {
                         }
 
                         leftText: qsTr("Clock")
-                        rightText: qsTr("3000 Mhz")
+                        rightText: qsTr(backend.cpuFreqText + "MHz")
+
+                        value: backend.cpuFreq
                     }
 
                     KAMProgressBar {
@@ -110,7 +103,8 @@ Item {
                         }
 
                         leftText: qsTr("Fan")
-                        rightText: qsTr("1500 RPM")
+                        rightText: qsTr(backend.cpuFanText + "RPM")
+                        value: backend.cpuFan
                     }
                 }
             }
@@ -118,12 +112,12 @@ Item {
                 id: rectGPU
                 height: parent.height
                 width: parent.width / 2
-                color: PlasmaCore.Theme.backgroundColor
+                color: PlasmaCore.Theme.headerBackgroundColor
 
                 Rectangle {
                     anchors.fill: parent
                     anchors.leftMargin: 5
-                    color: PlasmaCore.Theme.backgroundColor
+                    color: PlasmaCore.Theme.headerBackgroundColor
                     border.color: PlasmaCore.Theme.highlightColor
                     border.width: 1
                     radius: 5
@@ -148,18 +142,10 @@ Item {
 
                         width: parent.width / 2.5
                         height: width
-                    }
 
-                    Label {
-                        text: qsTr("Load")
-                        color: PlasmaCore.Theme.disabledTextColor
-                        font.pointSize: 12
-                        anchors {
-                            bottom: gpuRadialBar.bottom
-                            left: gpuRadialBar.right
-                            leftMargin: -50
-                            bottomMargin: -5
-                        }
+                        label: qsTr("Load")
+
+                        value: backend.gpuUsage
                     }
 
                     KAMProgressBar {
@@ -174,7 +160,8 @@ Item {
                         }
 
                         leftText: qsTr("Temperature")
-                        rightText: qsTr("50\u2103")
+                        rightText: qsTr(Number(backend.gpuTemp).toString() + "\u2103")
+                        value: backend.gpuTemp / 100
                     }
 
                     KAMProgressBar {
@@ -189,7 +176,9 @@ Item {
                         }
 
                         leftText: qsTr("Clock")
-                        rightText: qsTr("3000 Mhz")
+                        rightText: qsTr(backend.gpuFreqText + "MHz")
+
+                        value: backend.gpuFreq
                     }
 
                     KAMProgressBar {
@@ -204,7 +193,8 @@ Item {
                         }
 
                         leftText: qsTr("Fan")
-                        rightText: qsTr("1500 RPM")
+                        rightText: qsTr(backend.gpuFanText + "RPM")
+                        value: backend.gpuFan
                     }
                 }
             }
@@ -212,26 +202,22 @@ Item {
 
         Row {
             id: rowMiddle
-            height: (parent.height - rowTop.height) * 0.60
+            height: (parent.height - rowTop.height) * 0.50
             anchors.left: parent.left
             anchors.right: parent.right
             anchors.top: rowTop.bottom
-            anchors.rightMargin: 0
-            anchors.leftMargin: 0
-            anchors.topMargin: 0
-
 
             Rectangle {
                 id: rectRAM
                 height: parent.height
                 width: parent.width / 3
-                color: PlasmaCore.Theme.backgroundColor
+                color: PlasmaCore.Theme.headerBackgroundColor
 
                 Rectangle {
                     anchors.fill: parent
                     anchors.rightMargin: 5
                     anchors.topMargin: 10
-                    color: PlasmaCore.Theme.backgroundColor
+                    color: PlasmaCore.Theme.headerBackgroundColor
                     border.color: PlasmaCore.Theme.highlightColor
                     border.width: 1
                     radius: 5
@@ -243,6 +229,8 @@ Item {
 
                         width: parent.width / 2.5
                         height: width
+
+                        label: qsTr("Load")
                     }
                 }
             }
@@ -251,14 +239,14 @@ Item {
                 id: rectNetwork
                 height: parent.height
                 width: parent.width / 3
-                color: PlasmaCore.Theme.backgroundColor
+                color: PlasmaCore.Theme.headerBackgroundColor
 
                 Rectangle {
                     anchors.fill: parent
                     anchors.leftMargin: 5
                     anchors.rightMargin: 5
                     anchors.topMargin: 10
-                    color: PlasmaCore.Theme.backgroundColor
+                    color: PlasmaCore.Theme.headerBackgroundColor
                     border.color: PlasmaCore.Theme.highlightColor
                     border.width: 1
                     radius: 5
@@ -269,16 +257,17 @@ Item {
                 id: rectStorage
                 height: parent.height
                 width: parent.width / 3
-                color: PlasmaCore.Theme.backgroundColor
+                color: PlasmaCore.Theme.headerBackgroundColor
 
                 Rectangle {
                     anchors.fill: parent
                     anchors.leftMargin: 5
                     anchors.topMargin: 10
-                    color: PlasmaCore.Theme.backgroundColor
+                    color: PlasmaCore.Theme.headerBackgroundColor
                     border.color: PlasmaCore.Theme.highlightColor
                     border.width: 1
                     radius: 5
+
                     KAMRadialBar {
                         anchors.verticalCenter: parent.verticalCenter
                         anchors.horizontalCenter: parent.horizontalCenter
@@ -286,29 +275,36 @@ Item {
 
                         width: parent.width / 2.5
                         height: width
+
+                        label: qsTr("Load")
                     }
                 }
             }
         }
 
         Row {
-            id: row
+            id: rowBottom
             anchors.left: parent.left
             anchors.right: parent.right
             anchors.top: rowMiddle.bottom
             anchors.bottom: parent.bottom
-            anchors.rightMargin: 0
-            anchors.leftMargin: 0
-            anchors.bottomMargin: 0
-            anchors.topMargin: 0
 
             Rectangle {
+                id: rectProcesses
                 anchors.fill: parent
                 anchors.topMargin: 10
-                color: PlasmaCore.Theme.backgroundColor
+                color: PlasmaCore.Theme.headerBackgroundColor
                 border.color: PlasmaCore.Theme.highlightColor
                 border.width: 1
                 radius: 5
+
+                KAMProcTable {
+                    id: kAMProcTable
+                    anchors.fill: parent
+
+                    //model: backend.model
+                }
+
             }
         }
     }

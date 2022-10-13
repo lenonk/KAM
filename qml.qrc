@@ -7,6 +7,7 @@
         <file>qml/controls/TopBarButton.qml</file>
         <file>qml/controls/KAMRadialBar.qml</file>
         <file>qml/controls/KAMProgressBar.qml</file>
+        <file>qml/controls/KAMProcTable.qml</file>
 
         <file>qml/pages/settingsPage.qml</file>
 

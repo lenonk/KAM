@@ -44,11 +44,14 @@ class RadialBar : public QQuickPaintedItem
     Q_PROPERTY(QColor foregroundColor READ getForegroundColor WRITE setForegroundColor NOTIFY foregroundColorChanged)
     Q_PROPERTY(QColor progressColor READ getProgressColor WRITE setProgressColor NOTIFY progressColorChanged)
     Q_PROPERTY(QColor textColor READ getTextColor WRITE setTextColor NOTIFY textColorChanged)
+    Q_PROPERTY(QColor labelColor READ getLabelColor WRITE setLabelColor NOTIFY labelColorChanged)
     Q_PROPERTY(QString suffixText READ getSuffixText WRITE setSuffixText NOTIFY suffixTextChanged)
+    Q_PROPERTY(QString label READ getLabel WRITE setLabel NOTIFY labelChanged)
     Q_PROPERTY(bool showText READ isShowText WRITE setShowText)
     Q_PROPERTY(Qt::PenCapStyle penStyle READ getPenStyle WRITE setPenStyle NOTIFY penStyleChanged)
     Q_PROPERTY(DialType dialType READ getDialType WRITE setDialType NOTIFY dialTypeChanged)
     Q_PROPERTY(QFont textFont READ getTextFont WRITE setTextFont NOTIFY textFontChanged)
+    Q_PROPERTY(QFont labelFont READ getLabelFont WRITE setLabelFont NOTIFY labelFontChanged)
 
 public:
     RadialBar(QQuickItem *parent = 0);
@@ -72,11 +75,14 @@ public:
     QColor getForegroundColor() {return m_DialColor;}
     QColor getProgressColor() {return m_ProgressColor;}
     QColor getTextColor() {return m_TextColor;}
+    QColor getLabelColor() {return m_LabelColor;}
     QString getSuffixText() {return m_SuffixText;}
+    QString getLabel() {return m_Label;}
     bool isShowText() {return m_ShowText;}
     Qt::PenCapStyle getPenStyle() {return m_PenStyle;}
     DialType getDialType() {return m_DialType;}
     QFont getTextFont() {return m_TextFont;}
+    QFont getLabelFont() {return m_LabelFont;}
 
     void setSize(qreal size);
     void setStartAngle(qreal angle);
@@ -89,11 +95,14 @@ public:
     void setForegroundColor(QColor color);
     void setProgressColor(QColor color);
     void setTextColor(QColor color);
+    void setLabelColor(QColor color);
     void setSuffixText(QString text);
+    void setLabel(QString text);
     void setShowText(bool show);
     void setPenStyle(Qt::PenCapStyle style);
     void setDialType(DialType type);
     void setTextFont(QFont font);
+    void setLabelFont(QFont font);
 
 signals:
     void sizeChanged();
@@ -107,10 +116,13 @@ signals:
     void foregroundColorChanged();
     void progressColorChanged();
     void textColorChanged();
+    void labelColorChanged();
     void suffixTextChanged();
+    void labelChanged();
     void penStyleChanged();
     void dialTypeChanged();
     void textFontChanged();
+    void labelFontChanged();
 
 private:
     qreal m_Size;
@@ -124,11 +136,14 @@ private:
     QColor m_DialColor;
     QColor m_ProgressColor;
     QColor m_TextColor;
+    QColor m_LabelColor;
     QString m_SuffixText;
+    QString m_Label;
     bool m_ShowText;
     Qt::PenCapStyle m_PenStyle;
     DialType m_DialType;
     QFont m_TextFont;
+    QFont m_LabelFont;
 };
 
 #endif // RADIALBAR_H

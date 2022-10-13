@@ -17,4 +17,7 @@ RadialBar {
     textFont.family: PlasmaCore.Theme.defaultFont
     textFont.pointSize: width / 4
     textColor: progressColor
+    labelFont.family: PlasmaCore.Theme.defaultFont
+    labelFont.pointSize: width / 10
+    labelColor: PlasmaCore.Theme.disabledTextColor
 }

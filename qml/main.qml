@@ -4,6 +4,7 @@ import QtQuick.Controls 2.15
 import QtGraphicalEffects 1.15
 import Qt.labs.platform 1.1 as Labs
 
+//import Backend 1.0
 import "controls"
 import org.kde.plasma.core 2.0 as PlasmaCore
 
@@ -22,50 +23,11 @@ Window {
     property int windowMargin: 10
     property int isMinimized: 3
 
-    QtObject {
-        id: internal
+    property LeftMenuButton curActiveMenu: btnHome
 
-        function resetResizeBorders(value) {
-            resizeLeft.visible = value
-            resizeRight.visible = value
-            resizeBottom.visible = value
-            resizeWindow.visible = value
-        }
-
-        function resetNormalWindow() {
-            windowStatus = 0
-            windowMargin = 10
-            resetResizeBorders(true)
-            btnMaximizeRestore.btnIconSource = "images/svg_icons/maximize_icon.svg"
-        }
-
-        function maximizeRestore() {
-            if (windowStatus == 0) {
-                mainWindow.showMaximized()
-                windowStatus = 1
-                windowMargin = 0
-                resetResizeBorders(false)
-                btnMaximizeRestore.btnIconSource = "images/svg_icons/restore_icon.svg"
-            }
-            else {
-                mainWindow.showNormal()
-                resetNormalWindow()
-            }
-        }
-
-        function ifMaximizedWindowRestore() {
-            if (windowStatus == 1) {
-                mainWindow.showNormal()
-                resetNormalWindow()
-            }
-        }
-
-        function showApp() {
-            mainWindow.show()
-            mainWindow.raise()
-            mainWindow.requestActivate()
-        }
-    }
+    //Backend {
+    //    id: backend
+    //}
 
     Rectangle {
         id: rectAppContainer
@@ -75,13 +37,13 @@ Window {
         anchors.leftMargin: windowMargin
         anchors.bottomMargin: windowMargin
         anchors.topMargin: windowMargin
-        //border.width: 1
-        //border.color: PlasmaCore.Theme.highlightColor
+        border.width: 1
+        border.color: mainWindow.active ? PlasmaCore.Theme.highlightColor : PlasmaCore.Theme.headerBackgroundColor
 
         Rectangle {
             id: rectTitleBar
             height: 35
-            color: "#00040000"
+            color: PlasmaCore.Theme.headerBackgroundColor
             anchors.left: parent.left
             anchors.right: parent.right
             anchors.top: parent.top
@@ -93,7 +55,7 @@ Window {
             DragHandler {
                 onActiveChanged: if (active) {
                                      mainWindow.startSystemMove()
-                                     internal.ifMaximizedWindowRestore()
+                                     //internal.ifMaximizedWindowRestore()
                                  }
             }
 
@@ -119,9 +81,9 @@ Window {
                 text: qsTr("KDE")
                 anchors.verticalCenter: parent.verticalCenter
                 anchors.left: btnMenu.right
+                anchors.leftMargin: 5
                 font.bold: true
                 font.pointSize: 20
-                anchors.leftMargin: 0
                 font.family: PlasmaCore.Theme.defaultFont
                 color: PlasmaCore.Theme.headerTextColor
             }
@@ -154,7 +116,7 @@ Window {
                 onClicked: function() { mainWindow.close() }
             }
 
-            TopBarButton {
+            /*TopBarButton {
                 id: btnMaximizeRestore
                 anchors.right: btnClose.left
                 anchors.top: parent.top
@@ -168,11 +130,11 @@ Window {
                 anchors.rightMargin: 0
 
                 onClicked: internal.maximizeRestore()
-            }
+            }*/
 
             TopBarButton {
                 id: btnMinimize
-                anchors.right: btnMaximizeRestore.left
+                anchors.right: btnClose.left
                 anchors.top: parent.top
                 anchors.bottom: parent.bottom
                 btnIconSource: "images/svg_icons/minimize_icon.svg"
@@ -187,11 +149,10 @@ Window {
                     //if (SystemTrayIsEnabled) mainWindow.hide()
                     //else {
                     mainWindow.showMinimized()
-                    internal.resetNormalWindow()
+                    ////internal.resetNormalWindow()
                     //}
                 }
             }
-
         }
 
         Rectangle {
@@ -204,39 +165,19 @@ Window {
             anchors.bottomMargin: 1
             anchors.topMargin: 0
             color: PlasmaCore.Theme.viewBackgroundColor
+            border.width: 1
+            border.color: PlasmaCore.Theme.viewBackgroundColor
+            radius: 10
+            clip: true
 
             PropertyAnimation {
                 id: animationMenu
                 target: rectMenu
                 property: "width"
-                to: if (rectMenu.width == 70) return 175G; else return 70
+                to: if (rectMenu.width == 70) return 175; else return 70
                 duration: 500
                 easing.type: Easing.InOutCirc
             }
-
-            /*Rectangle {
-                id: rectRightBorder
-                anchors {
-                    top: parent.top
-                    right: parent.right
-                    bottom: parent.bottom
-                }
-
-                color: PlasmaCore.Theme.highlightColor
-                width: 1
-            }*/
-
-            /*Rectangle {
-                id: rectTopBorder
-                anchors {
-                    top: parent.top
-                    right: parent.right
-                    left: parent.left
-                }
-
-                color: PlasmaCore.Theme.highlightColor
-                height: 1
-            }*/
 
             LeftMenuButton {
                 id: btnHome
@@ -260,8 +201,9 @@ Window {
                 ToolTip.text: qsTr("Home")
 
                 onClicked: {
+                    curActiveMenu.isActiveMenu = false
                     btnHome.isActiveMenu = true
-                    btnSettings.isActiveMenu = false
+                    curActiveMenu = btnHome
                     stackView.push(Qt.resolvedUrl("pages/homePage.qml"))
                 }
             }
@@ -286,6 +228,13 @@ Window {
                 ToolTip.timeout: 5000
                 ToolTip.visible: hovered
                 ToolTip.text: qsTr("System Info")
+
+                onClicked: {
+                    curActiveMenu.isActiveMenu = false
+                    btnSysInfo.isActiveMenu = true
+                    curActiveMenu = btnSysInfo
+                    //stackView.push(Qt.resolvedUrl("pages/coolingPage.qml"))
+                }
             }
 
             LeftMenuButton {
@@ -308,6 +257,13 @@ Window {
                 ToolTip.timeout: 5000
                 ToolTip.visible: hovered
                 ToolTip.text: qsTr("Lighting")
+
+                onClicked: {
+                    curActiveMenu.isActiveMenu = false
+                    btnLighting.isActiveMenu = true
+                    curActiveMenu = btnLighting
+                    //stackView.push(Qt.resolvedUrl("pages/coolingPage.qml"))
+                }
             }
 
             LeftMenuButton {
@@ -330,6 +286,13 @@ Window {
                 ToolTip.timeout: 5000
                 ToolTip.visible: hovered
                 ToolTip.text: qsTr("Cooling")
+
+                onClicked: {
+                    curActiveMenu.isActiveMenu = false
+                    btnCooling.isActiveMenu = true
+                    curActiveMenu = btnCooling
+                    //stackView.push(Qt.resolvedUrl("pages/coolingPage.qml"))
+                }
             }
 
             LeftMenuButton {
@@ -354,8 +317,9 @@ Window {
                 ToolTip.text: qsTr("Settings")
 
                 onClicked: {
+                    curActiveMenu.isActiveMenu = false
                     btnSettings.isActiveMenu = true
-                    btnHome.isActiveMenu = false
+                    curActiveMenu = btnSettings
                     stackView.push(Qt.resolvedUrl("pages/settingsPage.qml"))
                 }
             }
@@ -367,120 +331,25 @@ Window {
             anchors.left: rectMenu.right
             anchors.right: parent.right
             anchors.top: rectTitleBar.bottom
-            anchors.bottom: rectStatusBar.top
+            anchors.bottom: parent.bottom
             anchors.rightMargin: 10
-            anchors.bottomMargin: 0
-            anchors.leftMargin: 0
+            anchors.bottomMargin: 10
+            anchors.leftMargin: 10
             anchors.topMargin: 0
             radius: 5
-            //border.width: 1
-            //border.color: PlasmaCore.Theme.highlightColor
 
             StackView {
                 id: stackView
                 anchors.fill: parent
-                anchors.leftMargin: 2
-                anchors.rightMargin: 2
-                anchors.topMargin: 2
-                anchors.bottomMargin: 2
+                anchors.leftMargin: 0
+                anchors.rightMargin: 0
+                anchors.topMargin: 0
+                anchors.bottomMargin: 0
                 clip: true
                 initialItem: Qt.resolvedUrl("pages/homePage.qml")
                 visible:true
             }
         }
-
-        /*MouseArea {
-            id: resizeLeft
-            width:10
-            anchors.left: parent.left
-            anchors.top: parent.top
-            anchors.bottom: parent.bottom
-            anchors.leftMargin: 0
-            anchors.bottomMargin: 10
-            anchors.topMargin: 10
-            cursorShape: Qt.SizeHorCursor
-
-            DragHandler {
-                target: null
-                onActiveChanged: if (active) { mainWindow.startSystemResize(Qt.LeftEdge) }
-            }
-        }
-
-        MouseArea {
-            id: resizeRight
-            width:10
-            anchors.right: parent.right
-            anchors.top: parent.top
-            anchors.bottom: parent.bottom
-            anchors.leftMargin: 0
-            anchors.bottomMargin: 10
-            anchors.topMargin: 10
-            cursorShape: Qt.SizeHorCursor
-
-            DragHandler {
-                target: null
-                onActiveChanged: if (active) { mainWindow.startSystemResize(Qt.RightEdge) }
-            }
-        }
-
-        MouseArea {
-            id: resizeBottom
-            width:10
-            anchors.left: parent.left
-            anchors.right: parent.right
-            anchors.bottom: parent.bottom
-            anchors.leftMargin: 10
-            anchors.rightMargin: 10
-            anchors.bottomMargin: 0
-            cursorShape: Qt.SizeVerCursor
-
-            DragHandler {
-                target: null
-                onActiveChanged: if (active) { mainWindow.startSystemResize(Qt.BottomEdge) }
-            }
-        }*/
-
-        /*Rectangle {
-            id: rectStatusBar
-            height: 25
-            anchors.left: rectMenu.right
-            anchors.right: parent.right
-            anchors.bottom: parent.bottom
-            anchors.rightMargin: 0
-            anchors.leftMargin: 0
-            anchors.bottomMargin: 0
-            color: PlasmaCore.Theme.headerBackgroundColor
-
-            Image {
-                id: imgResize
-                opacity: 0.5
-                width: 25
-                height: 25
-                anchors.right: parent.right
-                anchors.bottom: parent.bottom
-                anchors.leftMargin: 5
-                anchors.topMargin: 5
-                source: "images/svg_icons/resize_icon.svg"
-                sourceSize.height: 16
-                sourceSize.width: 16
-                fillMode: Image.PreserveAspectFit
-                antialiasing: false
-            }
-
-            MouseArea {
-                id: resizeWindow
-                width: 25
-                height:25
-                anchors.right: parent.right
-                anchors.bottom: parent.bottom
-                cursorShape: Qt.SizeFDiagCursor
-
-                DragHandler {
-                    target: null
-                    onActiveChanged: if (active) { mainWindow.startSystemResize(Qt.RightEdge | Qt.BottomEdge) }
-                }
-            }
-        }*/
     }
 
     DropShadow {
@@ -501,7 +370,8 @@ Window {
         onActivated: {
             if (reason === Labs.SystemTrayIcon.Trigger) {
                 if (mainWindow.visible === false) {
-                    internal.showApp();
+                    //internal.showApp();
+                    mainWindow.showNormal()
                 }
                 else {
                     mainWindow.hide()
@@ -517,7 +387,8 @@ Window {
             Labs.MenuItem {
                 id: showItem
                 text: qsTr("Show")
-                onTriggered: internal.showApp()
+                //onTriggered: internal.showApp()
+                onTriggered: mainWindow.showNormal()
             }
             Labs.MenuItem {
                 id: hideItem

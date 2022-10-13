@@ -1,6 +1,7 @@
 import QtQuick 2.15
 import QtQuick.Controls 2.15
 import QtGraphicalEffects 1.15
+import org.kde.plasma.core 2.0 as PlasmaCore
 
 Button {
     id: btnLeftMenu
@@ -32,6 +33,7 @@ Button {
     background: Rectangle {
         id: bgBtn
         color: internal.dynamicColor
+        radius: 5
 
         Rectangle {
             anchors {
@@ -68,7 +70,7 @@ Button {
     ColorOverlay {
         source: iconBtn
         anchors.fill: iconBtn
-        color: "#ffffff"
+        color: PlasmaCore.Theme.buttonTextColor
         anchors.verticalCenter: parent.verticalCenter
         antialiasing: false
         width: iconWidth
@@ -76,7 +78,7 @@ Button {
     }
 
     Text {
-        color: "#ffffff"
+        color: PlasmaCore.Theme.buttonTextColor
         text: btnLeftMenu.text
         font: btnLeftMenu.font
         anchors.verticalCenter: parent.verticalCenter

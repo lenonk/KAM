@@ -1,6 +1,7 @@
 import QtQuick 2.15
 import QtQuick.Controls 2.15
 import QtGraphicalEffects 1.15
+import org.kde.plasma.core 2.0 as PlasmaCore
 
 Button {
     id: btnTopBar
@@ -44,7 +45,7 @@ Button {
     ColorOverlay {
         anchors.fill: iconBtn
         source: iconBtn
-        color: "#ffffff"
+        color: PlasmaCore.Theme.buttonTextColor
         antialiasing: false
     }
 

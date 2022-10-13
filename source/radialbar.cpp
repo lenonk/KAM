@@ -25,6 +25,7 @@
 ************************************************************************************/
 
 #include <QPainter>
+#include <QLabel>
 
 #include "radialbar.h"
 
@@ -41,7 +42,9 @@ RadialBar::RadialBar(QQuickItem *parent)
       m_DialColor(QColor(80,80,80)),
       m_ProgressColor(QColor(135,26,5)),
       m_TextColor(QColor(0, 0, 0)),
+      m_LabelColor(QColor(0, 0, 0)),
       m_SuffixText(""),
+      m_Label(""),
       m_ShowText(true),
       m_PenStyle(Qt::FlatCap),
       m_DialType(DialType::MinToMax) {
@@ -121,6 +124,18 @@ void RadialBar::paint(QPainter *painter) {
     painter->setPen(pen);
     painter->drawArc(rect.adjusted(offset, offset, -offset, -offset), startAngle * 16, valueAngle * 16);
     painter->restore();
+
+    //Draw Label
+    painter->save();
+    painter->setFont(m_LabelFont);
+    pen.setColor(m_LabelColor);
+    painter->setPen(pen);
+
+    //painter->drawText(QPoint(this->boundingRect().right() - t_width, this->boundingRect().bottom()), m_Label);
+    painter->drawText(this->boundingRect(), Qt::AlignBottom | Qt::AlignRight, m_Label);
+
+    painter->restore();
+
 }
 
 void RadialBar::setSize(qreal size) {
@@ -212,12 +227,28 @@ void RadialBar::setTextColor(QColor color) {
     emit textColorChanged();
 }
 
+void RadialBar::setLabelColor(QColor color) {
+    if (m_LabelColor == color)
+        return;
+
+    m_LabelColor = color;
+    emit labelColorChanged();
+}
+
 void RadialBar::setSuffixText(QString text) {
     if (m_SuffixText == text)
         return;
 
     m_SuffixText = text;
     emit suffixTextChanged();
+}
+
+void RadialBar::setLabel(QString text) {
+    if (m_Label == text)
+        return;
+
+    m_Label = text;
+    emit labelChanged();
 }
 
 void RadialBar::setShowText(bool show) {
@@ -249,4 +280,12 @@ void RadialBar::setTextFont(QFont font) {
 
     m_TextFont = font;
     emit textFontChanged();
+}
+
+void RadialBar::setLabelFont(QFont font) {
+    if (m_LabelFont == font)
+        return;
+
+    m_LabelFont = font;
+    emit labelFontChanged();
 }
