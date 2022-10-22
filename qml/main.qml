@@ -4,9 +4,11 @@ import QtQuick.Controls 2.15
 import QtGraphicalEffects 1.15
 import Qt.labs.platform 1.1 as Labs
 
-//import Backend 1.0
-import "controls"
+import Backend 1.0
+
 import org.kde.plasma.core 2.0 as PlasmaCore
+
+import "controls"
 
 Window {
     id: mainWindow
@@ -22,12 +24,13 @@ Window {
     property int windowStatus: 0
     property int windowMargin: 10
     property int isMinimized: 3
+    property bool menuIsExpanded: false
 
     property LeftMenuButton curActiveMenu: btnHome
 
-    //Backend {
-    //    id: backend
-    //}
+    Backend {
+        id: backend
+    }
 
     Rectangle {
         id: rectAppContainer
@@ -73,7 +76,14 @@ Window {
                 btnColorMouseOver: PlasmaCore.Theme.buttonHoverColor
                 btnColorClicked: PlasmaCore.Theme.buttonFocusColor
 
-                onClicked: animationMenu.running = true
+                signal menuExpanded(bool expanded)
+
+                onClicked: {
+                    animationMenu.running = true
+                    menuExpanded(menuIsExpanded)
+                    menuIsExpanded = !menuIsExpanded
+                }
+
             }
 
             Label {
@@ -233,7 +243,7 @@ Window {
                     curActiveMenu.isActiveMenu = false
                     btnSysInfo.isActiveMenu = true
                     curActiveMenu = btnSysInfo
-                    //stackView.push(Qt.resolvedUrl("pages/coolingPage.qml"))
+                    stackView.push(Qt.resolvedUrl("pages/sysInfoPage.qml"))
                 }
             }
 
@@ -262,7 +272,7 @@ Window {
                     curActiveMenu.isActiveMenu = false
                     btnLighting.isActiveMenu = true
                     curActiveMenu = btnLighting
-                    //stackView.push(Qt.resolvedUrl("pages/coolingPage.qml"))
+                    stackView.push(Qt.resolvedUrl("pages/lightingPage.qml"))
                 }
             }
 
@@ -291,7 +301,7 @@ Window {
                     curActiveMenu.isActiveMenu = false
                     btnCooling.isActiveMenu = true
                     curActiveMenu = btnCooling
-                    //stackView.push(Qt.resolvedUrl("pages/coolingPage.qml"))
+                    stackView.push(Qt.resolvedUrl("pages/coolingPage.qml"))
                 }
             }
 

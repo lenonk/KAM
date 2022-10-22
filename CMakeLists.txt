@@ -61,7 +61,6 @@ set(PROJECT_SOURCES
         source/radeon_drm.cpp
         source/radialbar.cpp
         source/common.cpp
-        source/processmodel.cpp
         qml.qrc
 #        ${TS_FILES}
 )

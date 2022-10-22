@@ -53,7 +53,7 @@ Backend::sample_gpu_temp() {
     emit gpu_temp_changed();
 };
 
-// I'm not sure where there doesn't seem to be an ioctl for fan data, but
+// I'm not sure why there doesn't seem to be an ioctl for fan data, but
 // it is what it is.  Use lm-sensors instead
 static double
 sensors_get_value(const sensors_chip_name *name, const sensors_subfeature *sub) {

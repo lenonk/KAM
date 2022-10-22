@@ -6,6 +6,7 @@ import org.kde.plasma.core 2.0 as PlasmaCore
 Button {
     id: btnLeftMenu
     text: qsTr("Left Menu Text")
+    icon.color: "#ffffff"
 
     property url btnIconSource: "../images/svg_images/home_icon.svg"
     property color btnColorDefault: "#1c1d20"

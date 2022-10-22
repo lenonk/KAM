@@ -1,0 +1,10 @@
+[Desktop Entry]
+Name=KAM
+Comment=NZXT CAM for KDE
+Exec=/usr/local/bin/KAM
+Terminal=false
+Type=Application
+Icon=KAM
+Categories=Monitor;
+StartupWMClass=KAM
+Keywords=KAM;NZXT;Kraken;

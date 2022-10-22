@@ -13,9 +13,6 @@
 #include <sensors/sensors.h>
 
 #include "radeon_drm.h"
-#include "processmodel.h"
-
-//#include <processcore/process_data_model.h>
 
 class StorageModel;
 
@@ -42,22 +39,16 @@ class Backend : public QObject {
     Q_PROPERTY(qreal gpuFan READ get_gpu_fan NOTIFY gpu_fan_changed)
     Q_PROPERTY(QString gpuFanText READ get_gpu_fan_text NOTIFY gpu_fan_changed)
     
-    Q_PROPERTY(QAbstractListModel *model READ model CONSTANT);
-    //Q_PROPERTY(KSysGuard::ProcessDataModel *model READ model CONSTANT);
-
     // RAM Properties
-    //Q_PROPERTY(qreal ramUsage READ get_ram_usage NOTIFY ram_usage_changed)
-    
+    Q_PROPERTY(qreal ramUsage READ get_ram_usage NOTIFY ram_usage_changed)
+
+    // Storage Properties
+    Q_PROPERTY(qreal storageUsage READ get_storage_usage NOTIFY storage_usage_changed)
+
     public:
         explicit Backend(QObject *parent = nullptr);
         virtual ~Backend();
         
-        ProcessModel *m_model { nullptr }; // CHANGED
-        //KSysGuard::ProcessDataModel *m_model { nullptr }; // CHANGED
-
-        QAbstractListModel *model() { return m_model; }
-        //KSysGuard::ProcessDataModel *model() { return m_model; }
-
     signals:
         // CPU Signals
         void cpu_usage_changed();
@@ -72,8 +63,11 @@ class Backend : public QObject {
         void gpu_fan_changed();
         
         // RAM Signals 
-        //void ram_usage_changed();
+        void ram_usage_changed();
         
+        // Storage Signals
+        void storage_usage_changed();
+
     public slots:
         // CPU Slots
         qreal get_cpu_usage() { return m_cpu_usage; }
@@ -94,7 +88,10 @@ class Backend : public QObject {
         QString get_gpu_fan_text() { return m_gpu_fan_text; }
         
         // RAM Slots
-        //qreal get_ram_usage() { return m_ram_usage; }
+        qreal get_ram_usage() { return m_ram_usage; }
+
+        // Storage Slots
+        qreal get_storage_usage() { return m_storage_usage; }
 
     private:
         // Internal member variables
@@ -123,11 +120,14 @@ class Backend : public QObject {
         QString m_gpu_freq_text { "" };
         QString m_gpu_fan_text { "" };
         
+        // RAM member variables
+        qreal m_ram_usage { 0 };
+        
+        // Storage member variables
+        qreal m_storage_usage { 0 };
+
         RadeonDRM m_radeon_drm;
 
-        // RAM member variables
-        //qreal m_ram_usage { 0 };
-        
         // Private Methods
         void sample();
 
@@ -144,10 +144,10 @@ class Backend : public QObject {
         void sample_gpu_fan();
         
         // RAM private methods
-        //void sample_ram_usage();
+        void sample_ram_usage();
         
         // Mount point private methods
-        //void sample_mount_usage();
+        void sample_storage_usage();
         
         // Lib USB / Lighting
         //void detect_usb_devices();

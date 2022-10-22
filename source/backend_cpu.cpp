@@ -38,7 +38,7 @@ sum_active_time(int_fast64_t states[NUM_CPU_STATES]) {
 
 static int_fast64_t 
 sum_idle_time(int_fast64_t states[NUM_CPU_STATES]) {
-    return  states[S_IDLE] + states[S_IOWAIT];
+    return states[S_IDLE] + states[S_IOWAIT];
 }
 
 static void

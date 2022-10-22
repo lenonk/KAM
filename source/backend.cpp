@@ -1,7 +1,11 @@
 #include <iostream>
+#include <proc/sysinfo.h>
+#include <fstream>
+#include <filesystem>
 
 #include <boost/throw_exception.hpp>
 
+#include "common.h"
 #include "backend.h"
 //#include "storagemodel.h"
 
@@ -10,7 +14,9 @@ extern bool gpu_initialize();
 extern void cpu_cleanup();
 extern void gpu_cleanup();
 
-const int32_t TimerTick = 1000;
+const int32_t TimerTick = 2000;
+
+void boost::throw_exception(std::exception const & e){ }
 
 std::vector<std::string> sensors_config_files {
     "/etc/sensors3.conf",
@@ -21,7 +27,6 @@ std::vector<std::string> sensors_config_files {
 
 
 Backend::Backend(QObject *parent) : QObject(parent) {
-    m_model = new ProcessModel(this);
     sample(); // TODO: Fix this, it's shitty code to call something that can fail from a constructor.
 
     m_mon_timer = new QTimer(this);
@@ -88,5 +93,68 @@ Backend::sample() {
     sample_gpu_fan();
     
     // RAM Samples
-    //sample_ram_usage();
+    sample_ram_usage();
+
+    // Storage Samples
+    sample_storage_usage();
+}
+
+// RAM
+void
+Backend::sample_ram_usage() {
+   meminfo();
+   m_ram_usage = (int)((float)kb_main_used / (float)kb_main_total * 100);
+
+   emit ram_usage_changed();
+}
+
+// Storage
+#include <boost/algorithm/string.hpp>
+
+const std::string ProcMounts = "/proc/mounts";
+#define GB / (1024 * 1024 * 1024)
+
+void
+read_mounts(std::vector<std::string> &mounts) {
+    std::ifstream f_stat(ProcMounts);
+
+    if (!f_stat.is_open()) {
+        kam_error("Failed to open" + ProcMounts + ". Aborting...", false);
+        return;
+    }
+
+    std::string line;
+    while (std::getline(f_stat, line)) {
+        if (line.substr(0, 7) != "/dev/sd" &&
+            line.substr(0, 7) != "/dev/nv"  &&
+            line.substr(0, 7) != "/dev/md"  &&
+            line.substr(0, 11) != "/dev/mapper") {
+            continue;
+        }
+
+        std::vector<std::string> tokens;
+        boost::split(tokens, line, boost::is_any_of(" "));
+
+        if (tokens[1].find("efi") == std::string::npos)
+            mounts.push_back(tokens[1]);
+    }
+
+    return;
+}
+
+void
+Backend::sample_storage_usage() {
+    std::vector<std::string> m_vec;
+    read_mounts(m_vec);
+
+    qreal total_storage = 0;
+    qreal used_storage = 0;
+    for (auto &m : m_vec) {
+        auto si = std::filesystem::space(m);
+        total_storage += si.capacity;
+        used_storage += si.available;
+    }
+
+    m_storage_usage = (int)((qreal)used_storage / (qreal)total_storage * 100);
+    emit storage_usage_changed();
 }
