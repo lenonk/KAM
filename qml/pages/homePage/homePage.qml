@@ -3,8 +3,7 @@ import CustomControls 1.0
 import QtQuick.Controls 2.2
 import org.kde.plasma.core 2.0 as PlasmaCore
 
-import "../controls"
-import "./subpages"
+import "../../controls"
 
 Item {
     Rectangle {
@@ -21,9 +20,48 @@ Item {
 
             KAMCPURect {
                 id: rectCPU
+
+                MouseArea {
+                    id: cpuMouseArea
+                    anchors.fill: parent
+                    acceptedButtons: Qt.LeftButton
+                    cursorShape: Qt.PointingHandCursor
+                    hoverEnabled: true
+
+                    onClicked: (mouse)=> {
+                        stackView.push(Qt.resolvedUrl("cpuPage/cpuPage.qml"))
+                    }
+
+                    onContainsMouseChanged: {
+                       if (cpuMouseArea.containsMouse)
+                           rectCPU.borderColor = PlasmaCore.Theme.buttonFocusColor
+                       else
+                           rectCPU.borderColor = PlasmaCore.Theme.highlightColor
+                    }
+                }
             }
+
             KAMGPURect {
                 id: rectGPU
+
+                MouseArea {
+                    id: gpuMouseArea
+                    anchors.fill: parent
+                    acceptedButtons: Qt.LeftButton
+                    cursorShape: Qt.PointingHandCursor
+                    hoverEnabled: true
+
+                    onClicked: (mouse)=> {
+                        stackView.push(Qt.resolvedUrl("gpuPage/gpuPage.qml"))
+                    }
+
+                    onContainsMouseChanged: {
+                       if (gpuMouseArea.containsMouse)
+                           rectGPU.borderColor = PlasmaCore.Theme.buttonFocusColor
+                       else
+                           rectGPU.borderColor = PlasmaCore.Theme.highlightColor
+                    }
+                }
             }
         }
 

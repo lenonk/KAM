@@ -6,21 +6,24 @@ import org.kde.plasma.core 2.0 as PlasmaCore
 import "../../controls"
 
 Rectangle {
-    id: rectCPU
+    id: rectGPU
     height: parent.height
     width: parent.width / 2
     color: PlasmaCore.Theme.headerBackgroundColor
 
+    property alias borderColor: innerRect.border.color
+
     Rectangle {
+        id: innerRect
         anchors.fill: parent
-        anchors.rightMargin: 5
+        anchors.leftMargin: 5
         color: PlasmaCore.Theme.headerBackgroundColor
         border.color: PlasmaCore.Theme.highlightColor
         border.width: 1
         radius: 5
 
         Label {
-            text: qsTr("CPU")
+            text: qsTr("GPU")
             font.bold: true
             font.pointSize: 14
             color: PlasmaCore.Theme.textColor
@@ -32,7 +35,7 @@ Rectangle {
         }
 
         KAMRadialBar {
-            id: cpuRadialBar
+            id: gpuRadialBar
             anchors.verticalCenter: parent.verticalCenter
             anchors.left: parent.left
             anchors.margins: 10
@@ -42,14 +45,14 @@ Rectangle {
 
             label: qsTr("Load")
 
-            value: backend.cpuUsage
+            value: backend.gpuUsage
         }
 
         KAMProgressBar {
-            id: pbCPUTemp
+            id: pbGPUTemp
             anchors {
                 top: parent.top
-                left: cpuRadialBar.right
+                left: gpuRadialBar.right
                 right: parent.right
                 leftMargin: 15
                 rightMargin: 10
@@ -57,15 +60,15 @@ Rectangle {
             }
 
             leftText: qsTr("Temperature")
-            rightText: qsTr(Number(backend.cpuTemp).toString() + "\u2103")
-            value: backend.cpuTemp / 100
+            rightText: qsTr(Number(backend.gpuTemp).toString() + "\u2103")
+            value: backend.gpuTemp / 100
         }
 
         KAMProgressBar {
-            id: pbCPUClock
+            id: pbGPUClock
             anchors {
-                top: pbCPUTemp.bottom
-                left: cpuRadialBar.right
+                top: pbGPUTemp.bottom
+                left: gpuRadialBar.right
                 right: parent.right
                 leftMargin: 15
                 rightMargin: 10
@@ -73,16 +76,16 @@ Rectangle {
             }
 
             leftText: qsTr("Clock")
-            rightText: qsTr(backend.cpuFreqText + "MHz")
+            rightText: qsTr(backend.gpuFreqText + "MHz")
 
-            value: backend.cpuFreq
+            value: backend.gpuFreq
         }
 
         KAMProgressBar {
-            id: pbCPUFan
+            id: pbGPUFan
             anchors {
-                top: pbCPUClock.bottom
-                left: cpuRadialBar.right
+                top: pbGPUClock.bottom
+                left: gpuRadialBar.right
                 right: parent.right
                 leftMargin: 15
                 rightMargin: 10
@@ -90,8 +93,8 @@ Rectangle {
             }
 
             leftText: qsTr("Fan")
-            rightText: qsTr(backend.cpuFanText + "RPM")
-            value: backend.cpuFan
+            rightText: qsTr(backend.gpuFanText + "RPM")
+            value: (backend.gpuFan / backend.gpuFanMax)
         }
     }
 }

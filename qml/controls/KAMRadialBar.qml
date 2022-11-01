@@ -15,9 +15,9 @@ RadialBar {
     suffixText: "%"
     startAngle: 350
     textFont.family: PlasmaCore.Theme.defaultFont
-    textFont.pointSize: width / 4
+    textFont.pointSize: Math.max(PlasmaCore.Theme.smallestFont.pointSize, Math.round(width / 4))
     textColor: progressColor
     labelFont.family: PlasmaCore.Theme.defaultFont
-    labelFont.pointSize: width / 10
+    labelFont.pointSize: Math.max(PlasmaCore.Theme.smallestFont.pointSize, Math.round(width / 10))
     labelColor: PlasmaCore.Theme.disabledTextColor
 }

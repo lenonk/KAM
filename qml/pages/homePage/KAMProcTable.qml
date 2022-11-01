@@ -27,12 +27,15 @@ Table.BaseTableView {
         "appName",
         "usage",
         "vmPSS",
-        "nvidia_usage",
-        "nvidia_memory",
+        //"nvidia_usage",
+        //"nvidia_memory",
+        "amdgpu_usage",
+        "amdgpu_memory",
         "netInbound",
         "netOutbound",
         //"IconName"
     ]
+
     property alias columnDisplay: displayModel.columnDisplay
     property alias sourceModel: appModel
 
@@ -41,6 +44,8 @@ Table.BaseTableView {
     idRole: "Attribute"
 
     columnWidths: [0.318, 0.1, 0.12, 0.12, 0.13, 0.12, 0.1]
+
+    //ScrollBar.horizontal.policy: ScrollBar.AlwaysOff
 
     /*PropertyAnimation {
         id: animationView
@@ -151,8 +156,10 @@ Table.BaseTableView {
             "appName",
             "usage",
             "vmPSS",
-            "nvidia_usage",
-            "nvidia_memory",
+            //"nvidia_usage",
+            //"nvidia_memory",
+            "amdgpu_usage",
+            "amdgpu_memory",
         ]
         property var hiddenAttributes: []
 
@@ -215,6 +222,14 @@ Table.BaseTableView {
                 text: Formatter.Formatter.formatValue(parseInt(model.Value) / model.Maximum * 100, model.Unit)
             }
         }
+
+        DelegateChoice {
+            column: appModel.enabledAttributes.indexOf("usage")
+            Table.TextCellDelegate {
+                text: Formatter.Formatter.formatValue(parseInt(model.Value) / backend.cpuNum, model.Unit)
+            }
+        }
+
         DelegateChoice { Table.TextCellDelegate { } }
     }
 }

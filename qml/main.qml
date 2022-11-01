@@ -69,9 +69,6 @@ Window {
                 anchors.top: parent.top
                 anchors.bottom: parent.bottom
                 btnIconSource: "images/svg_icons/menu_icon.svg"
-                anchors.leftMargin: 0
-                anchors.bottomMargin: 0
-                anchors.topMargin: 0
                 btnColorDefault: PlasmaCore.Theme.headerBackgroundColor
                 btnColorMouseOver: PlasmaCore.Theme.buttonHoverColor
                 btnColorClicked: PlasmaCore.Theme.buttonFocusColor
@@ -119,28 +116,9 @@ Window {
                 btnColorMouseOver: PlasmaCore.Theme.buttonHoverColor
                 btnColorClicked: "#ff007f"
                 btnIconSource: "images/svg_icons/close_icon.svg"
-                anchors.bottomMargin: 0
-                anchors.topMargin: 0
-                anchors.rightMargin: 0
 
                 onClicked: function() { mainWindow.close() }
             }
-
-            /*TopBarButton {
-                id: btnMaximizeRestore
-                anchors.right: btnClose.left
-                anchors.top: parent.top
-                anchors.bottom: parent.bottom
-                btnIconSource: "images/svg_icons/maximize_icon.svg"
-                anchors.bottomMargin: 0
-                btnColorDefault: PlasmaCore.Theme.headerBackgroundColor
-                btnColorMouseOver: PlasmaCore.Theme.buttonHoverColor
-                btnColorClicked: PlasmaCore.Theme.buttonFocusColor
-                anchors.topMargin: 0
-                anchors.rightMargin: 0
-
-                onClicked: internal.maximizeRestore()
-            }*/
 
             TopBarButton {
                 id: btnMinimize
@@ -148,19 +126,17 @@ Window {
                 anchors.top: parent.top
                 anchors.bottom: parent.bottom
                 btnIconSource: "images/svg_icons/minimize_icon.svg"
-                anchors.bottomMargin: 0
                 btnColorDefault: PlasmaCore.Theme.headerBackgroundColor
                 btnColorMouseOver: PlasmaCore.Theme.buttonHoverColor
                 btnColorClicked: PlasmaCore.Theme.buttonFocusColor
-                anchors.topMargin: 0
-                anchors.rightMargin: 0
 
                 onClicked: {
-                    //if (SystemTrayIsEnabled) mainWindow.hide()
-                    //else {
-                    mainWindow.showMinimized()
-                    ////internal.resetNormalWindow()
-                    //}
+                    //if (SystemTrayIsEnabled)
+                        mainWindow.hide()
+                    //else
+                    //mainWindow.showMinimized()
+                    //internal.resetNormalWindow()
+
                 }
             }
         }
@@ -173,7 +149,6 @@ Window {
             anchors.bottom: parent.bottom
             anchors.leftMargin: 1
             anchors.bottomMargin: 1
-            anchors.topMargin: 0
             color: PlasmaCore.Theme.viewBackgroundColor
             border.width: 1
             border.color: PlasmaCore.Theme.viewBackgroundColor
@@ -214,7 +189,7 @@ Window {
                     curActiveMenu.isActiveMenu = false
                     btnHome.isActiveMenu = true
                     curActiveMenu = btnHome
-                    stackView.push(Qt.resolvedUrl("pages/homePage.qml"))
+                    stackView.push(Qt.resolvedUrl("pages/homePage/homePage.qml"))
                 }
             }
 
@@ -243,7 +218,7 @@ Window {
                     curActiveMenu.isActiveMenu = false
                     btnSysInfo.isActiveMenu = true
                     curActiveMenu = btnSysInfo
-                    stackView.push(Qt.resolvedUrl("pages/sysInfoPage.qml"))
+                    stackView.push(Qt.resolvedUrl("pages/sysInfoPage/sysInfoPage.qml"))
                 }
             }
 
@@ -272,7 +247,7 @@ Window {
                     curActiveMenu.isActiveMenu = false
                     btnLighting.isActiveMenu = true
                     curActiveMenu = btnLighting
-                    stackView.push(Qt.resolvedUrl("pages/lightingPage.qml"))
+                    stackView.push(Qt.resolvedUrl("pages/lightingPage/lightingPage.qml"))
                 }
             }
 
@@ -301,7 +276,7 @@ Window {
                     curActiveMenu.isActiveMenu = false
                     btnCooling.isActiveMenu = true
                     curActiveMenu = btnCooling
-                    stackView.push(Qt.resolvedUrl("pages/coolingPage.qml"))
+                    stackView.push(Qt.resolvedUrl("pages/coolingPage/coolingPage.qml"))
                 }
             }
 
@@ -330,7 +305,7 @@ Window {
                     curActiveMenu.isActiveMenu = false
                     btnSettings.isActiveMenu = true
                     curActiveMenu = btnSettings
-                    stackView.push(Qt.resolvedUrl("pages/settingsPage.qml"))
+                    stackView.push(Qt.resolvedUrl("pages/settingsPage/settingsPage.qml"))
                 }
             }
         }
@@ -345,18 +320,13 @@ Window {
             anchors.rightMargin: 10
             anchors.bottomMargin: 10
             anchors.leftMargin: 10
-            anchors.topMargin: 0
             radius: 5
 
             StackView {
                 id: stackView
                 anchors.fill: parent
-                anchors.leftMargin: 0
-                anchors.rightMargin: 0
-                anchors.topMargin: 0
-                anchors.bottomMargin: 0
                 clip: true
-                initialItem: Qt.resolvedUrl("pages/homePage.qml")
+                initialItem: Qt.resolvedUrl("pages/homePage/homePage.qml")
                 visible:true
             }
         }
@@ -375,20 +345,19 @@ Window {
 
     /*Labs.SystemTrayIcon {
         id: sysTrayIcon
+
         icon.source: "images/png_icons/kam.png"
         visible: true
         onActivated: {
             if (reason === Labs.SystemTrayIcon.Trigger) {
                 if (mainWindow.visible === false) {
-                    //internal.showApp();
                     mainWindow.showNormal()
+                    mainWindow.raise()
+                    mainWindow.requestActivate()
                 }
                 else {
                     mainWindow.hide()
                 }
-            }
-            else if (reason === Labs.SystemTrayIcon.MiddleClick) {
-                //showMessage("Message title", "Middle button was clicked.")
             }
         }
 
@@ -397,8 +366,11 @@ Window {
             Labs.MenuItem {
                 id: showItem
                 text: qsTr("Show")
-                //onTriggered: internal.showApp()
-                onTriggered: mainWindow.showNormal()
+                onTriggered: {
+                    mainWindow.showNormal()
+                    mainWindow.raise()
+                    mainWindow.requestActivate()
+                }
             }
             Labs.MenuItem {
                 id: hideItem

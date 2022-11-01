@@ -20,25 +20,31 @@ class Backend : public QObject {
     Q_OBJECT
     
     // CPU Properties
-    Q_PROPERTY(int cpuUsage READ get_cpu_usage NOTIFY cpu_usage_changed)
+    Q_PROPERTY(qreal cpuUsage READ get_cpu_usage NOTIFY cpu_usage_changed)
     Q_PROPERTY(qreal cpuTemp READ get_cpu_temp NOTIFY cpu_temp_changed)
     
     Q_PROPERTY(qreal cpuFreq READ get_cpu_freq NOTIFY cpu_freq_changed)
     Q_PROPERTY(QString cpuFreqText READ get_cpu_freq_text NOTIFY cpu_freq_changed)
-    
+    Q_PROPERTY(qreal cpuMinFreq READ get_cpu_min_freq NOTIFY cpu_freq_changed)
+    Q_PROPERTY(qreal cpuMaxFreq READ get_cpu_max_freq NOTIFY cpu_freq_changed)
+    Q_PROPERTY(qreal cpuBaseFreq READ get_cpu_base_freq NOTIFY cpu_freq_changed)
+
     Q_PROPERTY(qreal cpuFan READ get_cpu_fan NOTIFY cpu_fan_changed)
     Q_PROPERTY(QString cpuFanText READ get_cpu_fan_text NOTIFY cpu_fan_changed)
     
+    Q_PROPERTY(qint16 cpuNum READ get_cpu_num NOTIFY cpu_num_changed)
+
     //GPU Properties
-    Q_PROPERTY(int gpuUsage READ get_gpu_usage NOTIFY gpu_usage_changed)
+    Q_PROPERTY(qreal gpuUsage READ get_gpu_usage NOTIFY gpu_usage_changed)
     Q_PROPERTY(qreal gpuTemp READ get_gpu_temp NOTIFY gpu_temp_changed)
     
     Q_PROPERTY(qreal gpuFreq READ get_gpu_freq NOTIFY gpu_freq_changed)
     Q_PROPERTY(QString gpuFreqText READ get_gpu_freq_text NOTIFY gpu_freq_changed)
     
     Q_PROPERTY(qreal gpuFan READ get_gpu_fan NOTIFY gpu_fan_changed)
+    Q_PROPERTY(qreal gpuFanMax READ get_gpu_fan_max NOTIFY gpu_fan_changed)
     Q_PROPERTY(QString gpuFanText READ get_gpu_fan_text NOTIFY gpu_fan_changed)
-    
+
     // RAM Properties
     Q_PROPERTY(qreal ramUsage READ get_ram_usage NOTIFY ram_usage_changed)
 
@@ -55,6 +61,7 @@ class Backend : public QObject {
         void cpu_temp_changed();
         void cpu_freq_changed();
         void cpu_fan_changed();
+        void cpu_num_changed();
         
         // GPU Signals 
         void gpu_usage_changed();
@@ -73,7 +80,11 @@ class Backend : public QObject {
         qreal get_cpu_usage() { return m_cpu_usage; }
         qreal get_cpu_temp() { return m_cpu_temp; }
         qreal get_cpu_freq() { return m_cpu_freq; }
+        qreal get_cpu_min_freq() { return m_cpu_min_freq; }
+        qreal get_cpu_max_freq() { return m_cpu_max_freq; }
+        qreal get_cpu_base_freq() { return m_cpu_base_freq; }
         qreal get_cpu_fan() { return m_cpu_fan; }
+        qint16 get_cpu_num() { return m_cpu_num; }
         
         QString get_cpu_freq_text() { return m_cpu_freq_text; }
         QString get_cpu_fan_text() { return m_cpu_fan_text; }
@@ -83,7 +94,8 @@ class Backend : public QObject {
         qreal get_gpu_temp() { return m_gpu_temp; }
         qreal get_gpu_freq() { return m_gpu_freq; }
         qreal get_gpu_fan() { return m_gpu_fan; }
-        
+        qreal get_gpu_fan_max() { return m_gpu_fan_max; }
+
         QString get_gpu_freq_text() { return m_gpu_freq_text; }
         QString get_gpu_fan_text() { return m_gpu_fan_text; }
         
@@ -106,7 +118,11 @@ class Backend : public QObject {
         qreal m_cpu_usage { 0 };
         qreal m_cpu_temp { 0 };
         qreal m_cpu_freq { 0 };
+        qreal m_cpu_min_freq { 0 };
+        qreal m_cpu_max_freq { 0 };
+        qreal m_cpu_base_freq { 0 };
         qreal m_cpu_fan { 0 };
+        qint16 m_cpu_num { 0 };
         
         QString m_cpu_freq_text { "" };
         QString m_cpu_fan_text { "" };
@@ -116,7 +132,8 @@ class Backend : public QObject {
         qreal m_gpu_temp { 0 };
         qreal m_gpu_freq { 0 };
         qreal m_gpu_fan { 0 };
-        
+        qreal m_gpu_fan_max { 0 };
+
         QString m_gpu_freq_text { "" };
         QString m_gpu_fan_text { "" };
         

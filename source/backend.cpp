@@ -29,6 +29,9 @@ std::vector<std::string> sensors_config_files {
 Backend::Backend(QObject *parent) : QObject(parent) {
     sample(); // TODO: Fix this, it's shitty code to call something that can fail from a constructor.
 
+    m_cpu_num = sysconf(_SC_NPROCESSORS_ONLN);
+    emit cpu_num_changed();
+
     m_mon_timer = new QTimer(this);
     connect(m_mon_timer, &QTimer::timeout, this, QOverload<>::of(&Backend::sample));
     m_mon_timer->start(TimerTick);

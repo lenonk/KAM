@@ -35,8 +35,9 @@ Backend::sample_gpu_freq() {
     if (out != 0) {
         m_gpu_freq = (qreal)out / (qreal)m_radeon_drm.sclk_max;
         m_gpu_freq_text = QString(std::to_string(out).c_str());
-        emit gpu_freq_changed();
     }
+
+    emit gpu_freq_changed();
 }
 
 void
@@ -106,12 +107,11 @@ Backend::sample_gpu_fan() {
         m_gpu_fan_text = QString(std::to_string((int)m_gpu_fan).c_str());
     }
 
-    int32_t fan_max = 0;
     if ((sf = sensors_get_subfeature(cn, feat, SENSORS_SUBFEATURE_FAN_MAX)) != nullptr) {
-        fan_max = std::roundf(sensors_get_value(cn, sf));
+        m_gpu_fan_max = std::roundf(sensors_get_value(cn, sf));
     }
 
-    fan_max = (fan_max > 0) ? fan_max : 2500;
-    m_gpu_fan /= static_cast<float>(fan_max);
+    m_gpu_fan_max = (m_gpu_fan_max > 0) ? m_gpu_fan_max : 3000;
+
     emit gpu_fan_changed();
 };

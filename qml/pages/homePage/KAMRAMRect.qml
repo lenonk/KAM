@@ -21,7 +21,7 @@ Rectangle {
         radius: 5
 
         Label {
-            text: qsTr("RAM")
+            text: qsTr("MEMORY")
             font.bold: true
             font.pointSize: 14
             color: PlasmaCore.Theme.textColor

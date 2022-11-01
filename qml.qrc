@@ -1,16 +1,48 @@
 <RCC>
     <qresource prefix="/">
         <file>qml/main.qml</file>
-        <file>qml/pages/homePage.qml</file>
-        <file>qml/pages/sysInfoPage.qml</file>
-        <file>qml/pages/lightingPage.qml</file>
-        <file>qml/pages/coolingPage.qml</file>
-        <file>qml/pages/settingsPage.qml</file>
+
+        <file>qml/pages/homePage/homePage.qml</file>
+        <file>qml/pages/homePage/KAMCPURect.qml</file>
+        <file>qml/pages/homePage/KAMGPURect.qml</file>
+        <file>qml/pages/homePage/KAMRAMRect.qml</file>
+        <file>qml/pages/homePage/KAMNetRect.qml</file>
+        <file>qml/pages/homePage/KAMStorageRect.qml</file>
+        <file>qml/pages/homePage/KAMProcTable.qml</file>
+
+        <file>qml/pages/homePage/cpuPage/cpuPage.qml</file>
+        <file>qml/pages/homePage/cpuPage/CpuTopbar.qml</file>
+        <file>qml/pages/homePage/cpuPage/CpuInfoPanel.qml</file>
+        <file>qml/pages/homePage/cpuPage/CpuLoadPanel.qml</file>
+        <file>qml/pages/homePage/cpuPage/CpuTempPanel.qml</file>
+        <file>qml/pages/homePage/cpuPage/CpuClockSpeedPanel.qml</file>
+        <file>qml/pages/homePage/cpuPage/CpuFanSpeedPanel.qml</file>
+
+        <file>qml/pages/homePage/gpuPage/gpuPage.qml</file>
+        <file>qml/pages/homePage/gpuPage/GpuTopbar.qml</file>
+        <file>qml/pages/homePage/gpuPage/GpuInfoPanel.qml</file>
+        <file>qml/pages/homePage/gpuPage/GpuLoadPanel.qml</file>
+        <file>qml/pages/homePage/gpuPage/GpuTempPanel.qml</file>
+        <file>qml/pages/homePage/gpuPage/GpuClockSpeedPanel.qml</file>
+        <file>qml/pages/homePage/gpuPage/GpuFanSpeedPanel.qml</file>
+
+
+        <file>qml/pages/sysInfoPage/sysInfoPage.qml</file>
+
+        <file>qml/pages/lightingPage/lightingPage.qml</file>
+
+        <file>qml/pages/coolingPage/coolingPage.qml</file>
+
+        <file>qml/pages/settingsPage/settingsPage.qml</file>
+
         <file>qml/controls/LeftMenuButton.qml</file>
         <file>qml/controls/ToggleButton.qml</file>
         <file>qml/controls/TopBarButton.qml</file>
         <file>qml/controls/KAMRadialBar.qml</file>
         <file>qml/controls/KAMProgressBar.qml</file>
+        <file>qml/controls/TrafficMonitor.qml</file>
+        <file>qml/controls/KAMLineChart.qml</file>
+
         <file>qml/images/svg_icons/close_icon.svg</file>
         <file>qml/images/svg_icons/home_icon.svg</file>
         <file>qml/images/svg_icons/icon_app_top.svg</file>
@@ -25,14 +57,10 @@
         <file>qml/images/svg_icons/lighting_icon.svg</file>
         <file>qml/images/svg_icons/sysinfo_icon.svg</file>
         <file>qml/images/svg_icons/cooling_icon.svg</file>
-        <file>qml/images/png_icons/kam.png</file>
-        <file>qml/pages/subpages/KAMCPURect.qml</file>
-        <file>qml/pages/subpages/KAMGPURect.qml</file>
-        <file>qml/pages/subpages/KAMRAMRect.qml</file>
-        <file>qml/pages/subpages/KAMNetRect.qml</file>
-        <file>qml/pages/subpages/KAMStorageRect.qml</file>
-        <file>qml/pages/subpages/KAMProcTable.qml</file>
         <file>qml/images/svg_icons/arrow-downiconImage24px.svg</file>
         <file>qml/images/svg_icons/arrow-upiconImage24px.svg</file>
-    </qresource>
+        <file>qml/images/svg_icons/chevron-lefticonImage24px.svg</file>
+        <file>qml/images/png_icons/kam.png</file>
+        
+           </qresource>
 </RCC>

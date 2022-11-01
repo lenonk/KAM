@@ -218,20 +218,21 @@ read_freq_file(std::string s) {
 
 void
 Backend::sample_cpu_freq() {
-    float max_freq = 0, cur_freq = 0;
     uint8_t num_threads = std::thread::hardware_concurrency();
     
     for (int8_t i = 0; i < num_threads; i++) {
         float t_freq = read_freq_file(SysCpuFreq + "/cpu" + std::to_string(i) + "/cpufreq/scaling_cur_freq");
-        if (t_freq <= cur_freq)
+        if (t_freq <= m_cpu_freq)
             continue;
         
-        cur_freq = t_freq;
-        max_freq = read_freq_file(SysCpuFreq + "/cpu" + std::to_string(i) + "/cpufreq/scaling_max_freq");
+        m_cpu_freq = t_freq / 1000;
     }
     
-    m_cpu_freq_text = QString(std::to_string((int)(cur_freq / 1000)).c_str());
-    m_cpu_freq = static_cast<qreal>(cur_freq / max_freq);
-    
+    m_cpu_max_freq = read_freq_file(SysCpuFreq + "/cpu0" + "/cpufreq/cpuinfo_max_freq") / 1000 / 100 * 100; // Round down to nearest 100
+    m_cpu_min_freq = read_freq_file(SysCpuFreq + "/cpu0" + "/cpufreq/cpuinfo_min_freq") / 1000 / 100 * 100;
+    m_cpu_base_freq = read_freq_file(SysCpuFreq + "/cpu0" + "/cpufreq/scaling_max_freq") / 1000 / 100 * 100;
+
+    m_cpu_freq_text = QString(std::to_string((int)(m_cpu_freq)).c_str());
+
     emit cpu_freq_changed();
 }
