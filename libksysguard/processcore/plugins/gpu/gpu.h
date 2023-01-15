@@ -6,24 +6,28 @@
 
 #pragma once
 
+#include <chrono>
+#include <filesystem>
 #include <map>
 #include <vector>
 
 #include <processcore/process_attribute.h>
 #include <processcore/process_data_provider.h>
 
-struct AmdGpuFd {
+namespace fs = std::filesystem;
+
+struct GpuFd {
     pid_t pid{0};
     uint64_t gfx{0};
     uint32_t vram{0};
-    timespec ts{0, 0};
+    std::chrono::high_resolution_clock::time_point ts{std::chrono::high_resolution_clock::now()};
 };
 
-class AmdGpuPlugin : public KSysGuard::ProcessDataProvider
+class GpuPlugin : public KSysGuard::ProcessDataProvider
 {
     Q_OBJECT
 public:
-    AmdGpuPlugin(QObject *parent, const QVariantList &args);
+    GpuPlugin(QObject *parent, const QVariantList &args);
     void handleEnabledChanged(bool enabled) override;
     void update() override;
 
@@ -32,8 +36,9 @@ private:
     KSysGuard::ProcessAttribute *m_memory = nullptr;
 
     bool m_enabled{false};
-    std::map<pid_t, AmdGpuFd> m_process_cache;
+    std::map<pid_t, GpuFd> m_process_history;
 
-    void processPidDir(pid_t p, const std::string &path, const KSysGuard::Process *proc);
-    bool processPidEntry(const std::string &path, AmdGpuFd &proc);
+    void processPidDir(const pid_t p, const fs::path &path, KSysGuard::Process *proc);
+    bool processPidEntry(const fs::path &path, GpuFd &proc);
+    bool fileRefersToDrmNode(const fs::path &path, const std::string &fname);
 };
