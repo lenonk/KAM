@@ -31,8 +31,8 @@ Rectangle {
         width: parent.width * 0.3
         height: width
 
-        minValue: 0 // TODO: Get CPU min speed
-        maxValue: 2250 // TODO: Get CPU max speed
+        minValue: 0
+        maxValue: backend.gpuFreqMax
 
         textFont.pointSize: Math.max(PlasmaCore.Theme.smallestFont.pointSize, Math.round(width / 8))
 
@@ -55,7 +55,13 @@ Rectangle {
             name: "Clock Speed"
             value: Number(backend.gpuFreqText)
             minValue: 0
-            maxValue: 2250 // Get Max CPU clock speed
+            maxValue: 0
+
+            Binding on maxValue {
+                when: maxValue == 0
+                value: backend.gpuFreqMax
+            }
+
             axisSuffix: " MHz"
         }
     }

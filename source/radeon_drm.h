@@ -2,6 +2,7 @@
 #define RADEON_DRM_H
 
 #include <cstdint>
+#include <string>
 
 #include <xf86drm.h>
 #include <libdrm/amdgpu_drm.h>
@@ -18,29 +19,36 @@ class RadeonDRM
         RadeonDRM(int16_t bus = -1) : m_bus(bus) {};
         ~RadeonDRM() {};
 
-        uint64_t sclk_max { 0 };
-        uint64_t mclk_max { 0 };
-
         // Public Methods
         bool initialize();
+        void cleanup();
         bool find_drm();
-        /*uint32_t radeon_get_sclk(uint32_t *out);
-        uint32_t radeon_get_usage(uint32_t *out);*/
-        uint32_t read_amdgpu_sensor(uint32_t sensor, uint32_t *out);
+        bool is_initialized() { return m_initialized; }
+
+        uint32_t get_sclk_max() { return sclk_max; }
+        uint32_t get_mclk_max() { return mclk_max; }
+
+        std::string &get_gpu_name() { return m_gpu_name; }
+
+        uint32_t read_amdgpu_sensor(uint32_t sensor, void *out, size_t size);
 
     private:
         bool m_initialized { false };
 
         int16_t m_bus { -1 };
         int16_t m_device_bus { 0 };
-        uint32_t m_device_id { 0 };
         int32_t m_drm_fd { -1 };
+        uint32_t m_device_id { 0 };
+        uint64_t sclk_max { 0 };
+        uint64_t mclk_max { 0 };
 
         amdgpu_device_handle m_amdgpu_dev { nullptr };
 
         // Private methods
         bool init_drm(const char *path);
         void authenticate_drm();
+
+        std::string m_gpu_name;
 };
 
 #endif // RADEON_DRM_H

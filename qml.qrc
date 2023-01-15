@@ -62,5 +62,5 @@
         <file>qml/images/svg_icons/chevron-lefticonImage24px.svg</file>
         <file>qml/images/png_icons/kam.png</file>
         
-           </qresource>
+    </qresource>
 </RCC>

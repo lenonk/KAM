@@ -1,10 +1,15 @@
+#include "source/common.h"
 #include <thread>
 #include <iostream>
 #include <fstream>
 #include <sstream>
 #include <cmath>
 #include <string>
+#include <regex>
 
+#include <QtSql/QtSql>
+
+#include "common.h"
 #include "backend.h"
 
 enum CPUStates {
@@ -216,6 +221,8 @@ read_freq_file(std::string s) {
     return ret;
 }
 
+#include <cpuid.h>
+
 void
 Backend::sample_cpu_freq() {
     uint8_t num_threads = std::thread::hardware_concurrency();
@@ -235,4 +242,77 @@ Backend::sample_cpu_freq() {
     m_cpu_freq_text = QString(std::to_string((int)(m_cpu_freq)).c_str());
 
     emit cpu_freq_changed();
+}
+
+static QString
+find_cpu_model() {
+    // TODO: Make this better
+    char model[0x40];
+    uint32_t info[4] = { 0,0,0,0 };
+
+    __cpuid(0x80000000, info[0], info[1], info[2], info[3]);
+    uint32_t nexids = info[0];
+
+    memset(model, 0x0, sizeof(model));
+
+    for (uint32_t i = 0x80000000; i <= nexids; i++) {
+        __cpuid(i, info[0], info[1], info[2], info[3]);
+        if (i == 0x80000002)
+            memcpy(model, info, sizeof(info));
+        if (i == 0x80000003)
+            memcpy(model + 16, info, sizeof(info));
+        if (i == 0x80000004)
+            memcpy(model + 32, info, sizeof(info));
+    }
+
+    // This is disgusting and I hate it.  I am ashamed...
+    std::string retval(model);
+    std::regex rx("\\(R\\)");
+    retval = std::regex_replace(retval, rx, "");
+    rx.assign("\\(TM\\)");
+    retval = std::regex_replace(retval, rx, "");
+    rx.assign("Intel ");
+    retval = std::regex_replace(retval, rx, "");
+    rx.assign(" CPU @ \\d\\.\\d\\dGHz");
+    retval = std::regex_replace(retval, rx, "");
+
+    rx.assign("AMD ");
+    retval = std::regex_replace(retval, rx, "");
+    rx.assign(" \\d+-Core Processor");
+    retval = std::regex_replace(retval, rx, "");
+
+    return QString(retval.c_str());
+}
+
+void
+Backend::sample_cpu_info() {
+    m_cpu_model = find_cpu_model();
+    m_cpu_model = m_cpu_model.trimmed();
+
+    auto db = QSqlDatabase::addDatabase("QSQLITE");
+    db.setDatabaseName("processors.db");
+    if (!db.open()) {
+        kam_error("Unable to open processors DB");
+        return;
+    }
+
+    QSqlQuery query;
+    query.prepare("SELECT * from processors where model = (:model)");
+    query.bindValue(":model", m_cpu_model);
+    if (!query.exec()) {
+        kam_error("Unable to open processors DB");
+        return;
+    }
+
+    if (query.next()) {
+        int32_t idx_code_name = query.record().indexOf("code_name");
+        int32_t idx_socket_type = query.record().indexOf("socket_type");
+        int32_t idx_tdp = query.record().indexOf("tdp");
+
+        m_cpu_code_name = query.value(idx_code_name).toString();
+        m_cpu_socket_type = query.value(idx_socket_type).toString();
+        m_cpu_tdp = query.value(idx_tdp).toString();
+    }
+
+    emit cpu_info_changed();
 }

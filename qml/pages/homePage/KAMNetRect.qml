@@ -85,11 +85,11 @@ Rectangle {
             }
 
             rxBytes = prevRxBytes == 0 ? 0 : (RxBytes - prevRxBytes) * 1000 / downElapsedTime;
-            console.info("rxBytes: "  + rxBytes)
-            console.info("prevRxBytes: "  + prevRxBytes)
-            console.info("RxBytes: "  + RxBytes)
-            console.info("downElapsedTime: "  + downElapsedTime)
-            console.info("downLastTime: "  + downLastTime)
+            //console.info("rxBytes: "  + rxBytes)
+            //console.info("prevRxBytes: "  + prevRxBytes)
+            //console.info("RxBytes: "  + RxBytes)
+            //console.info("downElapsedTime: "  + downElapsedTime)
+            //console.info("downLastTime: "  + downLastTime)
             prevRxBytes = RxBytes;
             downLastTime = new Date().getTime()
 

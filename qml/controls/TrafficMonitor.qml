@@ -31,7 +31,7 @@ ColumnLayout {
             major.count: 3
             major.lineWidth: 1
             // Same calculation as Kirigami Separator
-            major.color: Kirigami.ColorUtils.linearInterpolation(PlasmaCore.Theme.backgroundColor, PlasmaCore.Theme.textColor, 0.4)
+            major.color: Kirigami.ColorUtils.linearInterpolation(PlasmaCore.Theme.headerBackgroundColor, PlasmaCore.Theme.textColor, 0.4)
         }
         QuickCharts.LineChart {
             id: plotter
@@ -43,7 +43,8 @@ ColumnLayout {
                 // Align plotter lines with labels.
                 topMargin: speedMetrics.height / 2 + PlasmaCore.Units.smallSpacing
             }
-            height: PlasmaCore.Units.gridUnit * 4
+            //height: PlasmaCore.Units.gridUnit * 4
+            height: 75
 
             smooth: false
             direction: QuickCharts.XYChart.ZeroAtEnd
@@ -140,33 +141,5 @@ ColumnLayout {
 
             text: "Up"
         }
-        /*QuickChartControls.Legend {
-            chart: plotter
-            Layout.leftMargin: PlasmaCore.Units.smallSpacing
-            spacing: PlasmaCore.Units.largeSpacing
-
-            anchors.top: plotter.bottom
-            anchors.left: plotter.left
-
-            model: model
-
-            delegate: RowLayout {
-                spacing: PlasmaCore.Units.smallSpacing
-                Rectangle {
-                    color: model.color
-                    width: PlasmaCore.Units.smallSpacing
-                    //height: legendLabel.height
-                    height: 30
-                }
-                PlasmaComponents3.Label {
-                    id: legendLabel
-                    font: PlasmaCore.Theme.smallestFont
-                    color: PlasmaCore.Theme.textColor
-                    text: model.name
-                    width: 100
-                }
-            }
-        }*/
     }
-
 }

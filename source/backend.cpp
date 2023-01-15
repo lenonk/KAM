@@ -27,7 +27,7 @@ std::vector<std::string> sensors_config_files {
 
 
 Backend::Backend(QObject *parent) : QObject(parent) {
-    sample(); // TODO: Fix this, it's shitty code to call something that can fail from a constructor.
+    //sample(); // TODO: Fix this, it's shitty code to call something that can fail from a constructor.
 
     m_cpu_num = sysconf(_SC_NPROCESSORS_ONLN);
     emit cpu_num_changed();
@@ -69,6 +69,13 @@ Backend::initialize() {
         return false;
     
     m_radeon_drm.initialize();
+    emit has_radeon_changed();
+
+    m_nvidia_nvml.initialize();
+    emit has_nvidia_changed();
+
+    sample_cpu_info();
+    emit cpu_info_changed();
 
     return true;
 }
@@ -76,13 +83,28 @@ Backend::initialize() {
 Backend::~Backend() {
     m_mon_timer->stop();
     sensors_cleanup();
+
+    if (m_nvidia_nvml.is_initialized())
+        m_nvidia_nvml.cleanup();
+
+    if (m_radeon_drm.is_initialized())
+        m_radeon_drm.cleanup();
 }
 
 void
 Backend::sample() {
-    if (!initialize())
+    if (!m_initialized && !initialize())
         abort();
     
+    if (m_radeon_drm.is_initialized()) {
+        m_gpu_name = m_radeon_drm.get_gpu_name().c_str();
+        emit gpu_name_changed();
+    }
+    else if (m_nvidia_nvml.is_initialized()) {
+        m_gpu_name = m_nvidia_nvml.get_gpu_name().c_str();
+        emit gpu_name_changed();
+    }
+
     // CPU samples
     sample_cpu_temp();
     sample_cpu_usage();
@@ -94,7 +116,8 @@ Backend::sample() {
     sample_gpu_usage();
     sample_gpu_freq();
     sample_gpu_fan();
-    
+    sample_gpu_power();
+
     // RAM Samples
     sample_ram_usage();
 

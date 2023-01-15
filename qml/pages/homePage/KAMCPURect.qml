@@ -17,6 +17,7 @@ Rectangle {
         id: innerRect
         anchors.fill: parent
         anchors.rightMargin: 5
+        anchors.topMargin: 10
         color: PlasmaCore.Theme.headerBackgroundColor
         border.color: PlasmaCore.Theme.highlightColor
         border.width: 1

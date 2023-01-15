@@ -35,7 +35,7 @@ Rectangle {
                 anchors.top: parent.top
                 anchors.left: parent.right
                 anchors.leftMargin: 5
-                text: "Ryzen 7 5800X"
+                text: backend.cpuModel
                 font.pointSize: 10
                 font.bold: false
                 color: PlasmaCore.Theme.disabledTextColor
@@ -59,7 +59,7 @@ Rectangle {
                 anchors.top: parent.top
                 anchors.left: parent.right
                 anchors.leftMargin: 5
-                text: "Vermeer"
+                text: backend.cpuCodeName
                 font.pointSize: 10
                 font.bold: false
                 color: PlasmaCore.Theme.disabledTextColor
@@ -83,7 +83,7 @@ Rectangle {
                 anchors.top: parent.top
                 anchors.left: parent.right
                 anchors.leftMargin: 5
-                text: "105"
+                text: backend.cpuTDP
                 font.pointSize: 10
                 font.bold: false
                 color: PlasmaCore.Theme.disabledTextColor
@@ -163,7 +163,7 @@ Rectangle {
                 anchors.top: parent.top
                 anchors.left: parent.right
                 anchors.leftMargin: 5
-                text: "AM4"
+                text: backend.cpuSocketType
                 font.pointSize: 10
                 font.bold: false
                 color: PlasmaCore.Theme.disabledTextColor

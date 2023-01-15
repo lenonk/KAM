@@ -23,18 +23,27 @@ Table.BaseTableView {
     anchors.topMargin: 10
     anchors.bottomMargin: 10
 
-    property var enabledColumns: [
-        "appName",
-        "usage",
-        "vmPSS",
-        //"nvidia_usage",
-        //"nvidia_memory",
-        "amdgpu_usage",
-        "amdgpu_memory",
-        "netInbound",
-        "netOutbound",
-        //"IconName"
-    ]
+    property var enabledColumns: {
+        var result = []
+
+        result.push("appName")
+        result.push("usage")
+        result.push("vmPSS")
+
+        if (backend.hasRadeon) {
+            result.push("amdgpu_usage")
+            result.push("amdgpu_memory")
+        }
+        else if (backend.hasNvidia) {
+            result.push("nvidia_usage")
+            result.push("nvidia_memory")
+        }
+
+        result.push("netInbound")
+        result.push("netOutbound")
+
+        return result;
+    }
 
     property alias columnDisplay: displayModel.columnDisplay
     property alias sourceModel: appModel
@@ -151,7 +160,7 @@ Table.BaseTableView {
         property int nameColumn: enabledAttributes.indexOf("appName")
         property int iconColumn: enabledAttributes.indexOf("iconName")
 
-        property var requiredAttributes: [
+        /*property var requiredAttributes: [
             "iconName",
             "appName",
             "usage",
@@ -160,7 +169,27 @@ Table.BaseTableView {
             //"nvidia_memory",
             "amdgpu_usage",
             "amdgpu_memory",
-        ]
+        ]*/
+        property var requiredAttributes: {
+            var result = []
+
+            result.push("iconName")
+            result.push("appName")
+            result.push("usage")
+            result.push("vmPSS")
+
+            if (backend.hasRadeon) {
+                result.push("amdgpu_usage")
+                result.push("amdgpu_memory")
+            }
+            else if (backend.hasNvidia) {
+                result.push("nvidia_usage")
+                result.push("nvidia_memory")
+            }
+
+            return result;
+        }
+
         property var hiddenAttributes: []
 
         enabled: view.visible

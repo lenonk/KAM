@@ -13,21 +13,20 @@ bool
 RadeonDRM::initialize() {
     if (m_initialized) return true;
 
-    if (find_drm()) m_initialized = true;
+    m_initialized = find_drm();
 
-    return true;
+    return m_initialized;
+}
+
+void
+RadeonDRM::cleanup() {
+    amdgpu_device_deinitialize(m_amdgpu_dev);
+    m_initialized = false;
 }
 
 uint32_t
-RadeonDRM::read_amdgpu_sensor(uint32_t sensor, uint32_t *out) {
-    struct drm_amdgpu_info buffer = {};
-
-    buffer.query = AMDGPU_INFO_SENSOR;
-    buffer.return_pointer = reinterpret_cast<std::uint64_t>(out);
-    buffer.return_size = sizeof(uint32_t);
-    buffer.sensor_info.type = sensor;
-
-    return ioctl(m_drm_fd, DRM_IOCTL_AMDGPU_INFO, &buffer);
+RadeonDRM::read_amdgpu_sensor(uint32_t sensor, void *out, size_t size) {
+    return amdgpu_query_sensor_info(m_amdgpu_dev, sensor, size, out);
 }
 
 void
@@ -77,7 +76,7 @@ RadeonDRM::init_drm(const char *path) {
         sclk_max = gpu.max_engine_clk / 1000;
         mclk_max = gpu.max_memory_clk / 1000;
 
-        amdgpu_device_deinitialize(m_amdgpu_dev);
+        m_gpu_name = amdgpu_get_marketing_name(m_amdgpu_dev);
     }
     else {
         kam_error(std::string("Unsupported GPU driver: ") + ver->name);
@@ -118,7 +117,7 @@ RadeonDRM::find_drm() {
     for (i = 0; i < count; i++) {
         if (devs[i]->bustype != DRM_BUS_PCI ||						// Not a PCI bus or...
             devs[i]->deviceinfo.pci->vendor_id != VENDOR_AMD ||		// Not an AMD device or...
-            (m_bus >= 0 && m_bus != devs[i]->businfo.pci->bus))			// Doesn't match the bus that was passed in
+            (m_bus >= 0 && m_bus != devs[i]->businfo.pci->bus))		// Doesn't match the bus that was passed in
             continue;
 
         int32_t j;

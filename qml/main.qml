@@ -149,9 +149,9 @@ Window {
             anchors.bottom: parent.bottom
             anchors.leftMargin: 1
             anchors.bottomMargin: 1
-            color: PlasmaCore.Theme.viewBackgroundColor
+            color: PlasmaCore.Theme.backgroundColor
             border.width: 1
-            border.color: PlasmaCore.Theme.viewBackgroundColor
+            border.color: PlasmaCore.Theme.backgroundColor
             radius: 10
             clip: true
 
@@ -173,7 +173,7 @@ Window {
                 anchors.top: parent.top
                 isActiveMenu: true
                 btnIconSource: "images/svg_icons/home_icon.svg"
-                btnColorDefault: PlasmaCore.Theme.viewBackgroundColor
+                btnColorDefault: PlasmaCore.Theme.backgroundColor
                 btnColorMouseOver: PlasmaCore.Theme.buttonHoverColor
                 btnColorClicked: PlasmaCore.Theme.buttonFocusColor
                 activeMenuColor: PlasmaCore.Theme.highlightColor
@@ -202,7 +202,7 @@ Window {
                 anchors.top: btnHome.bottom
                 isActiveMenu: false
                 btnIconSource: "images/svg_icons/sysinfo_icon.svg"
-                btnColorDefault: PlasmaCore.Theme.viewBackgroundColor
+                btnColorDefault: PlasmaCore.Theme.backgroundColor
                 btnColorMouseOver: PlasmaCore.Theme.buttonHoverColor
                 btnColorClicked: PlasmaCore.Theme.buttonFocusColor
                 activeMenuColor: PlasmaCore.Theme.highlightColor
@@ -231,7 +231,7 @@ Window {
                 anchors.top: btnSysInfo.bottom
                 isActiveMenu: false
                 btnIconSource: "images/svg_icons/lighting_icon.svg"
-                btnColorDefault: PlasmaCore.Theme.viewBackgroundColor
+                btnColorDefault: PlasmaCore.Theme.backgroundColor
                 btnColorMouseOver: PlasmaCore.Theme.buttonHoverColor
                 btnColorClicked: PlasmaCore.Theme.buttonFocusColor
                 activeMenuColor: PlasmaCore.Theme.highlightColor
@@ -260,7 +260,7 @@ Window {
                 anchors.top: btnLighting.bottom
                 isActiveMenu: false
                 btnIconSource: "images/svg_icons/cooling_icon.svg"
-                btnColorDefault: PlasmaCore.Theme.viewBackgroundColor
+                btnColorDefault: PlasmaCore.Theme.backgroundColor
                 btnColorMouseOver: PlasmaCore.Theme.buttonHoverColor
                 btnColorClicked: PlasmaCore.Theme.buttonFocusColor
                 activeMenuColor: PlasmaCore.Theme.highlightColor
@@ -289,7 +289,7 @@ Window {
                 anchors.left: parent.left
                 isActiveMenu: false
                 btnIconSource: "images/svg_icons/settings_icon.svg"
-                btnColorDefault: PlasmaCore.Theme.viewBackgroundColor
+                btnColorDefault: PlasmaCore.Theme.backgroundColor
                 btnColorMouseOver: PlasmaCore.Theme.buttonHoverColor
                 btnColorClicked: PlasmaCore.Theme.buttonFocusColor
                 activeMenuColor: PlasmaCore.Theme.highlightColor
@@ -312,7 +312,7 @@ Window {
 
         Rectangle {
             id: rectAppContent
-            color: PlasmaCore.Theme.backgroundColor
+            color: PlasmaCore.Theme.headerBackgroundColor
             anchors.left: rectMenu.right
             anchors.right: parent.right
             anchors.top: rectTitleBar.bottom

@@ -35,7 +35,7 @@ Rectangle {
                 anchors.top: parent.top
                 anchors.left: parent.right
                 anchors.leftMargin: 5
-                text: "AMD Radeon 6800XT"
+                text: backend.gpuName
                 font.pointSize: 10
                 font.bold: false
                 color: PlasmaCore.Theme.disabledTextColor
@@ -51,7 +51,7 @@ Rectangle {
                 leftMargin: 10
             }
 
-            text: "TDP: "
+            text: "Average Power: "
             font.pointSize: 10
             font.bold: true
 
@@ -59,7 +59,7 @@ Rectangle {
                 anchors.top: parent.top
                 anchors.left: parent.right
                 anchors.leftMargin: 5
-                text: "300"
+                text: backend.hasRadeon ? backend.gpuPower + " W" : "Unknown"
                 font.pointSize: 10
                 font.bold: false
                 color: PlasmaCore.Theme.disabledTextColor
@@ -93,7 +93,7 @@ Rectangle {
                 anchors.top: parent.top
                 anchors.left: parent.right
                 anchors.leftMargin: 5
-                text: "1825"
+                text: backend.gpuFreqMax
                 font.pointSize: 10
                 font.bold: false
                 color: PlasmaCore.Theme.disabledTextColor

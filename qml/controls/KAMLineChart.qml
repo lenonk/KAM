@@ -91,7 +91,7 @@ Item {
         major.count: 2
         major.lineWidth: 1
         // Same calculation as Kirigami Separator
-        major.color: Kirigami.ColorUtils.linearInterpolation(PlasmaCore.Theme.backgroundColor, PlasmaCore.Theme.textColor, 0.4)
+        major.color: Kirigami.ColorUtils.linearInterpolation(PlasmaCore.Theme.headerBackgroundColor, PlasmaCore.Theme.textColor, 0.4)
     }
 
     // @disable-check M300

@@ -34,9 +34,9 @@ Item {
 
                     onContainsMouseChanged: {
                        if (cpuMouseArea.containsMouse)
-                           rectCPU.borderColor = PlasmaCore.Theme.buttonFocusColor
+                           rectCPU.borderColor = Qt.lighter(PlasmaCore.Theme.highlightColor, 1.5) // Use interpolation see taffic monitor
                        else
-                           rectCPU.borderColor = PlasmaCore.Theme.highlightColor
+                           rectCPU.borderColor = PlasmaCore.Theme.highlightColor // Use interpolation see taffic monitor
                     }
                 }
             }
@@ -57,7 +57,7 @@ Item {
 
                     onContainsMouseChanged: {
                        if (gpuMouseArea.containsMouse)
-                           rectGPU.borderColor = PlasmaCore.Theme.buttonFocusColor
+                           rectGPU.borderColor = Qt.lighter(PlasmaCore.Theme.highlightColor, 1.5)
                        else
                            rectGPU.borderColor = PlasmaCore.Theme.highlightColor
                     }
@@ -92,6 +92,9 @@ Item {
             anchors.top: rowMiddle.bottom
             anchors.bottom: parent.bottom
 
+            property bool expanded: false
+            property int oldHeight: 0
+
             Rectangle {
                 id: rectProcesses
                 anchors.fill: parent
@@ -106,6 +109,54 @@ Item {
                     anchors.fill: parent
                 }
 
+                PropertyAnimation {
+                    id: animationProcTable
+                    target: rowBottom
+                    property: "height"
+                    to: rowBottom.expanded === true ? rowBottom.oldHeight : homePage.height
+                    duration: 500
+                    easing.type: Easing.InOutCirc
+
+                    onStarted: {
+                        if (rowBottom.expanded === false)
+                            rowBottom.oldHeight = rowBottom.height
+                            rowBottom.anchors.top = undefined
+                    }
+
+                    onFinished: {
+                        if (rowBottom.expanded === false)
+                            rowBottom.anchors.top = rowMiddle.bottom
+                    }
+                }
+
+                MouseArea {
+                    id: procTableMouseArea
+
+                    anchors {
+                        top: rectProcesses.top
+                        left: rectProcesses.left
+                        right: rectProcesses.right
+                        bottom: rectProcesses.bottom
+
+                        topMargin: 40
+                    }
+
+                    acceptedButtons: Qt.LeftButton
+                    cursorShape: Qt.PointingHandCursor
+                    hoverEnabled: true
+
+                    onClicked: (mouse)=> {
+                        animationProcTable.running = true;
+                        rowBottom.expanded = !rowBottom.expanded
+                    }
+
+                    onContainsMouseChanged: {
+                       if (procTableMouseArea.containsMouse)
+                           rectProcesses.border.color = Qt.lighter(PlasmaCore.Theme.highlightColor, 1.5) // Use interpolation see taffic monitor
+                       else
+                           rectProcesses.border.color = PlasmaCore.Theme.highlightColor // Use interpolation see taffic monitor
+                    }
+                }
             }
         }
     }

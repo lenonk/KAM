@@ -37,6 +37,7 @@ find_package(Qt${QT_VERSION_MAJOR} REQUIRED COMPONENTS
     Core
     Quick
     LinguistTools
+    Sql
 )
 
 find_package(X11 REQUIRED)
@@ -55,12 +56,13 @@ set(TS_FILES KAM_en_US.ts)
 
 set(PROJECT_SOURCES
         source/main.cpp
-        source/backend.cpp
-        source/backend_cpu.cpp
-        source/backend_amd.cpp
-        source/radeon_drm.cpp
         source/radialbar.cpp
         source/common.cpp
+        source/radeon_drm.cpp
+        source/nvidia_nvml.cpp
+        source/backend.cpp
+        source/backend_cpu.cpp
+        source/backend_gpu.cpp
         qml.qrc
 #        ${TS_FILES}
 )
@@ -103,16 +105,17 @@ target_link_libraries(KAM
   Qt${QT_VERSION_MAJOR}::Core
   Qt${QT_VERSION_MAJOR}::Quick
   Qt${QT_VERSION_MAJOR}::Widgets
+  Qt${QT_VERSION_MAJOR}::Sql
   KF5::Service
   KSysGuard::Sensors
   KSysGuard::ProcessCore
   ${Boost_LIBRARIES}
+  ${X11_LIBRARIES}
   procps
   sensors
   drm
   drm_amdgpu
   XNVCtrl
-  nvidia-ml
   Xext
 )
 
